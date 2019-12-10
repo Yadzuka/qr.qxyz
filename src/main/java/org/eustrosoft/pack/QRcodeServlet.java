@@ -1,4 +1,4 @@
-package ru.eustrosoft.pack;
+package org.eustrosoft.pack;
 
 import com.google.zxing.WriterException;
 
@@ -12,7 +12,8 @@ import java.io.OutputStream;
 public class QRcodeServlet extends HttpServlet {
 
     CreateQR qr;
-
+    String qrString;
+    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

@@ -6,7 +6,7 @@
 <body>
 <section>
     <h3>Engine info</h3>
-    <jsp:useBean id="engine" scope="request" type="ru.eustrosoft.pack.Engine"/>
+    <jsp:useBean id="engine" scope="request" type="org.eustrosoft.pack.Engine"/>
     <tr>
         <td>Name: ${engine.name} | Serial number: ${engine.serial}</td>
         <td><img src="engine/qr"/></td>

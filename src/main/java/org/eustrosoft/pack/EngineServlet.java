@@ -1,4 +1,4 @@
-package ru.eustrosoft.pack;
+package org.eustrosoft.pack;
 
 import com.google.zxing.WriterException;
 import javax.servlet.ServletConfig;
@@ -21,7 +21,8 @@ public class EngineServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, 
+    		             HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Enter doGet");
 
         String action = request.getParameter("action");
@@ -40,7 +41,8 @@ public class EngineServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, 
+    		              HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Enter doPost");
 
         request.setCharacterEncoding("UTF-8");

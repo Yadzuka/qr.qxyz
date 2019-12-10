@@ -1,4 +1,4 @@
-package ru.eustrosoft.pack;
+package org.eustrosoft.pack;
 
 import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
@@ -84,7 +84,6 @@ public class CreateQR {
                 }
             }
         }
-
         ImageIO.write(image,fileType,outStream);
 
     }
