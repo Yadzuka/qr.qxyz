@@ -7,6 +7,7 @@
     <groupId>com.eustrosoft</groupId>
     <artifactId>Servlets</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <dependencies>
         <dependency>
@@ -20,8 +21,7 @@
             <artifactId>core</artifactId>
             <version>3.4.0</version>
         </dependency>
-    </dependencies>
-
+	</dependencies>
     <build>
         <plugins>
             <plugin>
@@ -32,6 +32,22 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-        </plugins>
+            <plugin>            
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration> 
+                    <webXml>web\WEB-INF\web.xml</webXml> 
+                <webResources> 
+      			<resource> 
+        			<directory>target/</directory> 
+        			<targetPath>WEB-INF</targetPath>
+        			<includes> 
+          				<include>index.html</include> 
+        			</includes> 
+      			</resource> 
+    		</webResources> 
+                </configuration>
+            </plugin>
+       </plugins>        
     </build>
 </project>
