@@ -6,30 +6,56 @@
 <body>
 <section>
     <h3>Suppliers table</h3>
-    <jsp:useBean id="engine" scope="request" type="org.eustrosoft.pack.Engine"/>
+    <jsp:useBean id="contract" scope="request" type="org.eustrosoft.pack.Contract"/>
     <tr>
-        <td>Name: ${engine.name} | Serial number: ${engine.serial}</td>
+        <td>Name: ${contract.QR} | Serial number: ${contract.CONTRACTUM}</td>
         <td><img src="engine/qr"/></td>
         <td><a href="engine?action=update">Update</a></td>
     </tr>
     <table border="1">
    		<caption>Таблица поставщиков</caption>
    	<tr>
-    		<th>qrImg</th>
-    		<th>qr</th>
-    		<th>pType</th>
-    		<th>model</th>
-    		<th>sn</th>
-    		<th>pDate</th>
-    		<th>shipDate</th>
-    		<th>wStart</th>
-    		<th>wEnd</th>
-    		<th>contract</th>
-    		<th>client</th>
-    		<th>sold</th>
+    	<td>QR Image</td>
+    	<td>QR code</td>
+    	<td>Contract</td>
+  		<td>Contract date</td>
+    	<td>Price</td>
+   		<td>Supplier</td>
+    	<td>Client</td>
+    	<td>Production type</td>
+    	<td>Model</td>
+    	<td>Serial number</td>
+    	<td>Production date</td>
+ 		<td>Delivery date</td>
+    	<td>Sale date</td>
+		<td>Departure date</td>
+    	<td>Warranty start</td>
+    	<td>Warranty end</td>
+    	<td>Commentary</td>
    	</tr>
-   		<tr><td>${engine.qrImg}</td><td>${engine.qr}</td><td>${engine.pType}</td><td>23</td></tr>
+   		<tr>
+   			<td>${contract.qrImg}</td>
+    		<td>${contract.QR}</td>
+    		<td>${contract.CONTRACTNUM}</td>
+   	 		<td>${contract.contractdate}</td>
+    		<td>${contract.MONEY}</td>
+    		<td>${contract.SUPPLIER}</td>
+    		<td>${contract.CLIENT}</td>
+    		<td>${contract.PRODTYPE}</td>
+    		<td>${contract.MODEL}</td>
+    		<td>${contract.SN}</td>
+    		<td>${contract.prodate}</td>
+    		<td>${contract.shipdate}</td>
+    		<td>${contract.SALEDATE}</td>
+    		<td>${contract.DEPARTUREDATE}</td>
+    		<td>${contract.WARRANTYSTART}</td>
+    		<td>${contract.WARRANTYEND}</td>
+    		<td>${contract.COMMENT}</td>
+   		</tr>
   	</table>
 </section>
+	
+	<<a href="update">Go to update</a>>
+
 </body>
 </html>
