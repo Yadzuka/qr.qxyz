@@ -2,7 +2,6 @@ package org.eustrosoft.contractpkg;
 
 import java.io.IOException;
 
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,14 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ContractServlet extends HttpServlet{
 	
-	
 	Members member;
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		
-		member = new Members("EXAMPLESD");
+
 		/*try {
 			ControllerContract controller = new ControllerContract();
 		} catch (NumberFormatException | IOException e) {
@@ -42,7 +39,7 @@ public class ContractServlet extends HttpServlet{
                 break;
             case "member":
             default:
-                req.getRequestDispatcher("/entiring.jsp").forward(req, resp);
+                req.getRequestDispatcher("/members.jsp").forward(req, resp);
                 break;
         }
 	}

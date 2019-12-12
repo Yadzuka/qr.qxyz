@@ -1,4 +1,4 @@
-package org.eustrosoft.pack;
+package org.eustrosoft.contractpkg;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,8 +7,9 @@ import java.util.LinkedList;
 
 class ControllerContract {
 
-	private BufferedReader reader;
-	private LinkedList<Contract> listOfContract;
+	private static BufferedReader reader;
+	private static LinkedList<Contract> listOfContract;
+	private static String [] massiveOfParams;
 	
 	public ControllerContract() throws NumberFormatException, IOException {
 		
@@ -16,14 +17,12 @@ class ControllerContract {
 		InitializeContracts();
 	}
 	
-	
-	
 	// Dictionary initializer
 	private void InitializeContracts() throws NumberFormatException, IOException {
 		reader = new BufferedReader(new FileReader
-				("/db/members/EXAMPLESD/0100D/001/master.list.csv"));
+				("/db/members/EXAMPLESD/0100D/master.list.csv"));
 		String stringForLine="";
-		String [] massiveOfParams;
+		
 		while((stringForLine = reader.readLine()) != null) {
 			massiveOfParams = stringForLine.split(";");
 			getListOfContract().add(new Contract(massiveOfParams));

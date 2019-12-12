@@ -5,9 +5,13 @@
 </head>
 <body>
 
+
+	<jsp:useBean id ="members" scope="request" type="org.eustrosoft.contractpkg.Members"/>
+	<jsp:useBean id="contract" scope="request" type="org.eustrosoft.contractpkg.Contract"/>
+	<jsp:useBean id="controllerContract" scope="request" type="org.eustrosoft.contractpkg.ControllerContract"/>
 	<div class = "membertable">
 		<table>
-			<jsp:useBean id ="members" scope="request" type="org.eustrosoft.contractpkg.Members"/>
+			
 			<tr> 
 				<td>Organization names</td>
 			</tr>
@@ -20,9 +24,9 @@
 	</div>
 
 <div>
-<section>
+	<section>
     <h3>Suppliers table</h3>
-    <jsp:useBean id="contract" scope="request" type="org.eustrosoft.contractpkg.Contract"/>
+    
     <tr>
         <td>Name: ${contract.QR} | Serial number: ${contract.CONTRACTUM}</td>
         <td><img src="engine/qr"/></td>
@@ -71,7 +75,7 @@
     		<td>${contract.COMMENT}</td>
    		</tr>
   	</table>
-</section>
+	</section>
 </div>
 	<<a href="update">Go to update</a>>
 

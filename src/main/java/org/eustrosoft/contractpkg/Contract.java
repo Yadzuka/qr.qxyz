@@ -1,10 +1,11 @@
-package org.eustrosoft.pack;
+package org.eustrosoft.contractpkg;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Dictionary;
+import org.eustrosoft.pack.*;
 
 public class Contract {
 
@@ -12,10 +13,9 @@ public class Contract {
 	private Dictionary<Integer,String []> dictOfParameters;
 	private String [] paramsOfString;
 	
-	
 	//Constructors
 	public Contract(String [] par) throws NumberFormatException, IOException{
-		this();
+		
 	}
 	
 	public Contract() throws NumberFormatException, IOException {
@@ -31,6 +31,13 @@ public class Contract {
 					((par.get(i) == null) ? null : par.get(i));
 		}
 		
+	}
+	
+	public void setParam(String paramert,int index) {
+		paramsOfString[index] = paramert;
+	}
+	public String getParam(int index) {
+		return paramsOfString[index];
 	}
 	
 	private String [] massiveOfData() {

@@ -11,7 +11,6 @@ public class Engine {
     
     ////////////////////////
     private String qr;
-    private CreateQR qrImg;
     private String ptype;
     private String model;
     private String sn;
@@ -151,12 +150,12 @@ public class Engine {
 	}
 	
 
-	public CreateQR getQrImg() {
+	/*public CreateQR getQrImg() {
 		return qrImg;
 	}
 
 	public void setQrImg(CreateQR qrImg) {
 		this.qrImg = qrImg;
-	}
+	}*/
 	////////////////////////////////
 }
