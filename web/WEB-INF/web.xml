@@ -31,5 +31,14 @@
         <servlet-name>qrServlet</servlet-name>
         <url-pattern>/engine/qr</url-pattern>
     </servlet-mapping>
+    
+        <servlet>
+        <servlet-name>contactServlet</servlet-name>
+        <servlet-class>org.eustrosoft.contractpkg.ContractServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>contractServlet</servlet-name>
+        <url-pattern>/contractServlet</url-pattern>
+    </servlet-mapping>
 
 </web-app>

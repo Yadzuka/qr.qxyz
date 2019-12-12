@@ -4,14 +4,32 @@
     <title>Starting table</title>
 </head>
 <body>
+
+	<div class = "membertable">
+		<table>
+			<jsp:useBean id ="members" scope="request" type="org.eustrosoft.contractpkg.Members"/>
+			<tr> 
+				<td>Organization names</td>
+			</tr>
+			<% %>
+			<tr>
+				<td>${members.companyName}</td>		 
+			</tr>
+			<% %>
+		</table>
+	</div>
+
+<div>
 <section>
     <h3>Suppliers table</h3>
-    <jsp:useBean id="contract" scope="request" type="org.eustrosoft.pack.Contract"/>
+    <jsp:useBean id="contract" scope="request" type="org.eustrosoft.contractpkg.Contract"/>
     <tr>
         <td>Name: ${contract.QR} | Serial number: ${contract.CONTRACTUM}</td>
         <td><img src="engine/qr"/></td>
         <td><a href="engine?action=update">Update</a></td>
     </tr>
+    
+
     <table border="1">
    		<caption>Таблица поставщиков</caption>
    	<tr>
@@ -54,7 +72,7 @@
    		</tr>
   	</table>
 </section>
-	
+</div>
 	<<a href="update">Go to update</a>>
 
 </body>

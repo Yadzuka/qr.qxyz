@@ -3,34 +3,71 @@ package org.eustrosoft.pack;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.util.Dictionary;
 
 public class Contract {
 
-	private String [] parametrs;
 	private BufferedReader reader;
-	private static int counter = 0;
-	private String bufferedString;
+	private Dictionary<Integer,String []> dictOfParameters;
+	private String [] paramsOfString;
 	
-	public Contract(String [] par){
+	
+	//Constructors
+	public Contract(String [] par) throws NumberFormatException, IOException{
+		this();
+	}
+	
+	public Contract() throws NumberFormatException, IOException {
+		InitializeDictionary();
+	}
+	
+	public Contract(Dictionary<Integer, String> par) {
 		
+		paramsOfString = massiveOfData();
 		
-		
+		for(int i = 0; i < paramsOfString.length; i++) {
+			paramsOfString[i] = 
+					((par.get(i) == null) ? null : par.get(i));
+		}
 		
 	}
 	
-	private String [] readLine(int line) throws FileNotFoundException {
+	private String [] massiveOfData() {
+		
+		return new String[]{
+			this.ZOID,this.ZVER,this.ZDATE,
+			this.ZUID,this.ZSTA,this.QR,
+			this.CONTRACTNUM,
+			this.contractdate,
+			this.MONEY,this.SUPPLIER,
+			this.CLIENT,this.PRODTYPE,this.MODEL,
+			this.SN,this.prodate,this.shipdate,
+			this.SALEDATE,this.DEPARTUREDATE,
+			this.WARRANTYSTART,this.WARRANTYEND,
+			this.COMMENT,
+		};
+		
+	}
+	
+	//Getters for line/all dictionary
+	private String [] getLine(int line){
+		return dictOfParameters.get(line);
+	}
+	private Dictionary<Integer,String[]> getAll(){
+		return dictOfParameters;
+	}
+	
+	// Dictionary initializer
+	private void InitializeDictionary() throws NumberFormatException, IOException {
 		reader = new BufferedReader(new FileReader
 				("/db/members/EXAMPLESD/0100D/001/master.list.csv"));
-		while(counter!=line)
-	    	bufferedString = reader.readLine();
-		if(
-		    
-			(bufferedString = reader.readLine()) != null) {
-			
+		String stringForLine="";
+		String [] massiveOfParams;
+		while((stringForLine = reader.readLine()) != null) {
+			massiveOfParams = stringForLine.split(";");
+			dictOfParameters.put(Integer.parseInt(massiveOfParams[0]),massiveOfParams);
 		}
-		
-		
-		return new String[];
 	}
 	
 	////////////////////////
@@ -44,7 +81,7 @@ public class Contract {
 	
     ////////////////////////
     //       Model        //
-    ///////////////////////
+    ////////////////////////
     private CreateQR qrImg;
     
     private String QR;
