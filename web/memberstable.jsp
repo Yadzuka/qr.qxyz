@@ -1,41 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page import="org.eustrosoft.contractpkg.Model.Contract" %>
 <html>
 <head>
     <title>Starting table</title>
 </head>
 <body>
+	<%!
+		Contract contract = new Contract();
 
+	%>
+    <h3>Products</h3>
 
-	<jsp:useBean id ="members" scope="request" type="org.eustrosoft.contractpkg.Members"/>
-	<jsp:useBean id="contract" scope="request" type="org.eustrosoft.contractpkg.Contract"/>
-	<jsp:useBean id="controllerContract" scope="request" type="org.eustrosoft.contractpkg.ControllerContract"/>
-	<div class = "membertable">
-		<table>
-			
-			<tr> 
-				<td>Organization names</td>
-			</tr>
-			<% %>
-			<tr>
-				<td>${members.companyName}</td>		 
-			</tr>
-			<% %>
-		</table>
-	</div>
-
-<div>
-	<section>
-    <h3>Suppliers table</h3>
-    
-    <tr>
-        <td>Name: ${contract.QR} | Serial number: ${contract.CONTRACTUM}</td>
-        <td><img src="engine/qr"/></td>
-        <td><a href="engine?action=update">Update</a></td>
-    </tr>
-    
-
-    <table border="1">
-   		<caption>Таблица поставщиков</caption>
+    <table border="2">
+   		<caption>Таблица товаров</caption>
    	<tr>
     	<td>QR Image</td>
     	<td>QR code</td>
@@ -55,6 +32,11 @@
     	<td>Warranty end</td>
     	<td>Commentary</td>
    	</tr>
+		<%
+			for(int i = 0; i < 3; i++){
+
+		%>
+
    		<tr>
    			<td>${contract.qrImg}</td>
     		<td>${contract.QR}</td>
@@ -74,10 +56,12 @@
     		<td>${contract.WARRANTYEND}</td>
     		<td>${contract.COMMENT}</td>
    		</tr>
+		<%
+			}
+		%>
   	</table>
-	</section>
-</div>
-	<<a href="update">Go to update</a>>
 
+	<a href="update.jsp">Go to update</a>
+	<a href="ranges.jsp?member=<%=request.getParameter("table")%>">Go back</a>
 </body>
 </html>

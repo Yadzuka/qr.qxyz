@@ -1,5 +1,7 @@
 package org.eustrosoft.contractpkg;
 
+import org.eustrosoft.contractpkg.Model.Members;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ public class ContractServlet extends HttpServlet{
 	
 	@Override
 	public void init() throws ServletException {
+	    Members members = new Members();
 		super.init();
 
 		/*try {
@@ -26,9 +29,7 @@ public class ContractServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, 
 			             HttpServletResponse resp) 
 			             throws ServletException, IOException {
-        System.out.println("Enter doGet ContractServlet");
-
-        String action = req.getParameter("member");
+        String action = req.getParameter("");
         req.setAttribute("member", member);
 
         System.out.println(action);

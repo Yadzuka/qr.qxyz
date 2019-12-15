@@ -1,14 +1,15 @@
-package org.eustrosoft.contractpkg;
+package org.eustrosoft.contractpkg.Model;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Dictionary;
 import org.eustrosoft.pack.*;
 
+/*
+	Class witch contains all of needed to DOMINATOR company parameters
+ */
 public class Contract {
 
+	// Global parameters to save product info
 	private BufferedReader reader;
 	private Dictionary<Integer,String []> dictOfParameters;
 	private String [] paramsOfString;
@@ -18,8 +19,12 @@ public class Contract {
 		
 	}
 	
-	public Contract() throws NumberFormatException, IOException {
-		InitializeDictionary();
+	public Contract() throws NumberFormatException {
+		/*try {
+			InitializeTable();
+		}catch (IOException ex){
+			ex.printStackTrace();
+		}*/
 	}
 	
 	public Contract(Dictionary<Integer, String> par) {
@@ -27,19 +32,36 @@ public class Contract {
 		paramsOfString = massiveOfData();
 		
 		for(int i = 0; i < paramsOfString.length; i++) {
-			paramsOfString[i] = 
-					((par.get(i) == null) ? null : par.get(i));
+			paramsOfString[i] = par.get(i);
 		}
 		
 	}
-	
-	public void setParam(String paramert,int index) {
-		paramsOfString[index] = paramert;
+
+	// Getter and setter for all parameters
+	public void setParam(String parameter,int index) { paramsOfString[index] = parameter; }
+	// Set all parameters from one massive
+	public void setAllParams(String [] params){
+
+		String [] bufferToSetAllParameters = new String [massiveOfData().length];
+
+		if(params.length != massiveOfData().length) {
+
+			for (int i = 0; i < params.length; i++) {
+				bufferToSetAllParameters[i] = params[i];
+			}
+
+			params = bufferToSetAllParameters;
+		}
+
+		for(int i = 0; i < params.length; i++){
+			setParam(params[i], i);
+		}
 	}
 	public String getParam(int index) {
 		return paramsOfString[index];
 	}
-	
+
+	// Massive of parameters in one place (in development)
 	private String [] massiveOfData() {
 		
 		return new String[]{
@@ -54,7 +76,9 @@ public class Contract {
 			this.WARRANTYSTART,this.WARRANTYEND,
 			this.COMMENT,
 		};
-		
+	}
+	public String getParamz(int index){
+		return massiveOfData()[index];
 	}
 	
 	//Getters for line/all dictionary
@@ -65,17 +89,26 @@ public class Contract {
 		return dictOfParameters;
 	}
 	
-	// Dictionary initializer
-	private void InitializeDictionary() throws NumberFormatException, IOException {
+	// Table initializer
+	private void InitializeTable() throws NumberFormatException, IOException {
 		reader = new BufferedReader(new FileReader
-				("/db/members/EXAMPLESD/0100D/001/master.list.csv"));
+				("E:\\AllProjects\\Java_projects\\Sources\\Java_product_projects\\" +
+						   "qr.qxyz\\db\\members\\EXAMPLESD\\0100D\\master.list.csv"));
 		String stringForLine="";
-		String [] massiveOfParams;
+		String [] massiveOfParams = new String [massiveOfData().length];
 		while((stringForLine = reader.readLine()) != null) {
-			massiveOfParams = stringForLine.split(";");
-			dictOfParameters.put(Integer.parseInt(massiveOfParams[0]),massiveOfParams);
+			if(stringForLine.startsWith("#"))
+				continue;
+			String [] buffer = stringForLine.split(";");
+			for(int i = 0; i< buffer.length; i++){
+				massiveOfParams[i] = buffer[i];
+			}
+
 		}
+		for(int i =0; i < massiveOfData().length; i++)
+			massiveOfData()[i] = massiveOfParams[i];
 	}
+
 	
 	////////////////////////
 	//       TIS          //

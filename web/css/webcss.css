@@ -1,0 +1,10 @@
+/* Member's table parameters */
+.memberstable{
+    border: blue;
+    margin: 10px;
+    border-left-style: wave;
+    align: 3 ;
+    background-color: greenyellow;
+    font-family: "Bookman Old Style";
+    font-size: 35px;
+}
