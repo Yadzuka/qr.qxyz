@@ -11,6 +11,7 @@
 </head>
 <body>
 <span>
+    <h3>Привет!</h3>
     <!-- PREVIOUS (BAD) VARIANT WITHOUT USING CONTROLLER! -->
 
     <%--<%!
@@ -64,6 +65,7 @@
 
     <!-- I think that's better -->
     <%
+        request.setCharacterEncoding("UTF-8");
         RangesController rController = new RangesController(response.getWriter(),f);
         rController.getInfo();
     %>
@@ -76,7 +78,7 @@
         <tr>
             <td>
                 <!-- Go to table with old context to get info about -->
-                <a href="memberstable.jsp?table=<%=f%>">
+                <a href="memberstable.jsp?table=<%=f%>&range=<%="0100D"%>">
                     <%="0100D"%>
                 </a>
             </td>

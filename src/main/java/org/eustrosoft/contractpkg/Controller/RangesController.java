@@ -2,6 +2,9 @@ package org.eustrosoft.contractpkg.Controller;
 
 import java.io.*;
 
+/*
+    Ranges controller to manage ranges system
+ */
 public class RangesController {
 
     File pathToRanges;

@@ -1,118 +1,101 @@
 package org.eustrosoft.contractpkg.Model;
 
+
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Dictionary;
-import org.eustrosoft.pack.*;
+import java.util.List;
+import java.util.Vector;
 
 /*
 	Class witch contains all of needed to DOMINATOR company parameters
  */
 public class Contract {
 
+	Vector vec;
+
+	public Contract(String [] str){
+		vec = new Vector();
+
+	}
+
+
+
+
+	/*
 	// Global parameters to save product info
 	private BufferedReader reader;
-	private Dictionary<Integer,String []> dictOfParameters;
-	private String [] paramsOfString;
-	
+	Vector<String> infoMassiveForOneContract;
+
+	// Getter ( for a while here)
+	public Vector<String> getVector(){
+		return infoMassiveForOneContract;
+	}
+	public void setParam(int index, String s){
+		massiveOfParams()[index] = s;
+
+	}
 	//Constructors
-	public Contract(String [] par) throws NumberFormatException, IOException{
-		
+	public Contract(String[] par){
+		this();
+		initializeMassive(par);
 	}
 	
-	public Contract() throws NumberFormatException {
-		/*try {
-			InitializeTable();
-		}catch (IOException ex){
-			ex.printStackTrace();
-		}*/
-	}
-	
-	public Contract(Dictionary<Integer, String> par) {
-		
-		paramsOfString = massiveOfData();
-		
-		for(int i = 0; i < paramsOfString.length; i++) {
-			paramsOfString[i] = par.get(i);
-		}
-		
+	public Contract(){
+		infoMassiveForOneContract = new Vector<>();
 	}
 
-	// Getter and setter for all parameters
-	public void setParam(String parameter,int index) { paramsOfString[index] = parameter; }
-	// Set all parameters from one massive
-	public void setAllParams(String [] params){
-
-		String [] bufferToSetAllParameters = new String [massiveOfData().length];
-
-		if(params.length != massiveOfData().length) {
-
-			for (int i = 0; i < params.length; i++) {
-				bufferToSetAllParameters[i] = params[i];
+	private void initializeMassive(String [] par){
+		try {
+			//infoMassiveForOneContract = new Vector<>(21);
+			for (int i = 0; i < par.length; i++) {
+				setParam(i, par[i]);
+				//infoMassiveForOneContract.add(par[i]);
 			}
-
-			params = bufferToSetAllParameters;
+			for (int i = par.length - 1; i < 21; i++) {
+				setParam(i, "null");
+				//infoMassiveForOneContract.add(null);
+			}
+		}catch(ArrayIndexOutOfBoundsException ex){
+			ex.printStackTrace();
+		}catch (Exception ex){
+			ex.printStackTrace();
 		}
 
-		for(int i = 0; i < params.length; i++){
-			setParam(params[i], i);
-		}
-	}
-	public String getParam(int index) {
-		return paramsOfString[index];
 	}
 
-	// Massive of parameters in one place (in development)
-	private String [] massiveOfData() {
-		
-		return new String[]{
-			this.ZOID,this.ZVER,this.ZDATE,
-			this.ZUID,this.ZSTA,this.QR,
-			this.CONTRACTNUM,
-			this.contractdate,
-			this.MONEY,this.SUPPLIER,
-			this.CLIENT,this.PRODTYPE,this.MODEL,
-			this.SN,this.prodate,this.shipdate,
-			this.SALEDATE,this.DEPARTUREDATE,
-			this.WARRANTYSTART,this.WARRANTYEND,
-			this.COMMENT,
-		};
+	private String [] massiveOfParams(){
+		String [] f = new String[]{
+				this.ZOID, this.ZVER, this.ZDATE, this.ZUID, this.ZSTA,
+				this.QR, this.CONTRACTNUM, this.contractdate,
+				this.MONEY, this.SUPPLIER, this.CLIENT, this.PRODTYPE,
+				this.MODEL, this.SN, this.prodate, this.shipdate, this.SALEDATE,
+				this.DEPARTUREDATE, this.WARRANTYSTART, this.WARRANTYEND, this.COMMENT};
+		return f;
 	}
-	public String getParamz(int index){
-		return massiveOfData()[index];
-	}
-	
-	//Getters for line/all dictionary
-	private String [] getLine(int line){
-		return dictOfParameters.get(line);
-	}
-	private Dictionary<Integer,String[]> getAll(){
-		return dictOfParameters;
-	}
-	
-	// Table initializer
-	private void InitializeTable() throws NumberFormatException, IOException {
+	// ArrayList initializer
+	/*public ArrayList<Contract> Initialize() throws NumberFormatException, IOException {
+		ArrayList<Contract> startingList = new ArrayList<>();
+
 		reader = new BufferedReader(new FileReader
 				("E:\\AllProjects\\Java_projects\\Sources\\Java_product_projects\\" +
-						   "qr.qxyz\\db\\members\\EXAMPLESD\\0100D\\master.list.csv"));
+						"qr.qxyz\\db\\members\\EXAMPLESD\\0100D\\master.list.csv"));
 		String stringForLine="";
-		String [] massiveOfParams = new String [massiveOfData().length];
+		String [] massiveOfParams = new String [21];
 		while((stringForLine = reader.readLine()) != null) {
 			if(stringForLine.startsWith("#"))
 				continue;
-			String [] buffer = stringForLine.split(";");
-			for(int i = 0; i< buffer.length; i++){
-				massiveOfParams[i] = buffer[i];
+			else{
+				startingList.add(new Contract(stringForLine.split(";")));
 			}
-
 		}
-		for(int i =0; i < massiveOfData().length; i++)
-			massiveOfData()[i] = massiveOfParams[i];
-	}
-
+		return startingList;
+	}*/
 	
 	////////////////////////
 	//       TIS          //
     ////////////////////////
+	/*
 	private String ZOID;
 	private String ZVER;
 	private String ZDATE;
@@ -298,7 +281,8 @@ public class Contract {
   	
   	@Override
   	public String toString() {
-  		return QR;
+
+  		return null;
   	}
   	
   	////////////////////////////////
@@ -324,7 +308,7 @@ public class Contract {
 	public String getZUID() {
 		return ZUID;
 	}
-	
+	*/
 	////////////////////////////////
 	
 }

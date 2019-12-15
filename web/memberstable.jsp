@@ -1,18 +1,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import="org.eustrosoft.contractpkg.Model.Contract" %>
+<%@ page import="org.eustrosoft.contractpkg.Model.Contract" %>
+<%@ page import="org.eustrosoft.contractpkg.Controller.QRCodeController" %>
+<%@ page import="org.eustrosoft.contractpkg.Controller.QRcodeServlet" %>
+<%@ page import="org.eustrosoft.contractpkg.Model.CreateQR" %>
 <html>
 <head>
     <title>Starting table</title>
 </head>
 <body>
 	<%!
+		QRCodeController qrController = new QRCodeController();
 		Contract contract = new Contract();
-
+		QRcodeServlet serv = new QRcodeServlet();
+		CreateQR qr;
 	%>
-    <h3>Products</h3>
 
     <table border="2">
-   		<caption>Таблица товаров</caption>
+   		<caption><h3>Таблица товаров</h3></caption>
    	<tr>
     	<td>QR Image</td>
     	<td>QR code</td>
@@ -38,8 +42,10 @@
 		%>
 
    		<tr>
-   			<td>${contract.qrImg}</td>
-    		<td>${contract.QR}</td>
+   			<td>
+				<img src="engine/qr?range=<%=request.getParameter("range")%>"/>
+			</td>
+    		<td><a href="<%="http://qr.qxyz.ru?q="+request.getParameter("range")+"001"%>"/>site</td>
     		<td>${contract.CONTRACTNUM}</td>
    	 		<td>${contract.contractdate}</td>
     		<td>${contract.MONEY}</td>

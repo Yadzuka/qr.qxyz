@@ -29,6 +29,7 @@ public class ContractServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, 
 			             HttpServletResponse resp) 
 			             throws ServletException, IOException {
+	    req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("");
         req.setAttribute("member", member);
 
@@ -44,4 +45,15 @@ public class ContractServlet extends HttpServlet{
                 break;
         }
 	}
+
+    @Override
+    protected void doPost(HttpServletRequest req,
+                          HttpServletResponse resp)
+                          throws ServletException, IOException {
+	    req.setCharacterEncoding("UTF-8");
+	    if(req.getParameter("submit") == "submit"){
+
+        }
+
+    }
 }
