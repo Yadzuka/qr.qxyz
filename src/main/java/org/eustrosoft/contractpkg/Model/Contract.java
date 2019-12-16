@@ -220,7 +220,6 @@ public class Contract {
     ////////////////////////
     //       Model        //
     ////////////////////////
-    private CreateQR qrImg;
 
     private String QR;
     private String CONTRACTNUM;
@@ -383,15 +382,6 @@ public class Contract {
 
     public void setCOMMENT(String cOMMENT) {
         COMMENT = cOMMENT;
-    }
-
-    //  QR image
-    public CreateQR getQrImg() {
-        return qrImg;
-    }
-
-    public void setQrImg(CreateQR qrImg) {
-        this.qrImg = qrImg;
     }
 
     @Override

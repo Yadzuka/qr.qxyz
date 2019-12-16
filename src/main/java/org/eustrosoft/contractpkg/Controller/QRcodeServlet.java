@@ -1,10 +1,5 @@
-package org.eustrosoft.contractpkg.Model;
+package org.eustrosoft.contractpkg.Controller;
 
-import java.util.*;
-import java.awt.*;
-import java.io.*;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
@@ -12,58 +7,38 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Hashtable;
+
 /*
-    Create qr model, witch takes stream and draw image
+    Creating QR using zxing class
  */
-public class CreateQR {
-    // Global variables to create qr from existing context
-    private static String qrCodeText;
-    private static int size;
-    private static String fileType;
-    private OutputStream outStream;
+public class QRcodeServlet extends HttpServlet {
 
-    // Singleton plants (??)
-    private static CreateQR ourInstance = new CreateQR();
-    public static CreateQR getInstance() {
-        return ourInstance;
-    }
-
-    private CreateQR(){
-
-    }
-
-    public CreateQR(String qrText, OutputStream outputStream) throws IOException, WriterException {
-
-        this.qrCodeText = qrText;
-        this.size = size = 125;
-        this.fileType = "png";
-        this.outStream = outputStream;
-    }
-
-    // QR parameters (not using yet)
-    public String getQrCodeText() { return qrCodeText; }
-
-    public void setQrCodeText(String qrCodeText) { this.qrCodeText = qrCodeText; }
-
-    public int getSize() { return size; }
-
-    public void setSize(int size) { this.size = size; }
-
-    public String getFileType() { return fileType; }
-
-    public void setFileType(String fileType) { this.fileType = fileType; }
-
-    public OutputStream getOutStream() { return outStream; }
-    // Overrided toString method (may be can use to get reference to the qr (site)
+    //doGet method to create QR image (using engine/qr in jsp)
     @Override
-    public String toString() {
-        return "Engine{" +
-                ", qrcodetext='" + qrCodeText + '\'' +
-                ", filetype=" + fileType +
-                '}';
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        OutputStream str= resp.getOutputStream();
+        String codingString = req.getParameter("codingString");
+        String toQR = "http://qr.qxyz.ru/?q=" + codingString;
+        try {
+            createQRImage(str,125,"PNG",toQR);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
     }
+
     // Main method to create qr image
-    public void createQRImage()
+    public void createQRImage(OutputStream outStream, int size, String fileType,String qrCodeText)
             throws WriterException, IOException {
         // Decoding context
         Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable();
@@ -94,6 +69,6 @@ public class CreateQR {
         }
         // Writing image finally
         ImageIO.write(image, fileType, outStream);
-
     }
+
 }

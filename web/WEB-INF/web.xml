@@ -15,7 +15,7 @@
 
     <servlet>
         <servlet-name>qrServlet</servlet-name>
-        <servlet-class>org.eustrosoft.contractpkg.QRcodeServlet</servlet-class>
+        <servlet-class>org.eustrosoft.contractpkg.Controller.QRcodeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>qrServlet</servlet-name>
