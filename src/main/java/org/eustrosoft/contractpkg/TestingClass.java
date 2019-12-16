@@ -18,8 +18,7 @@ class TestingClass {
 
     private static ArrayList<Contract> arr;
     public static void main(String[] args) throws IOException {
-        //ControllerContract controller = new ControllerContract();
+        ControllerContract controller = new ControllerContract();
 
-        ControllerContract contr = new ControllerContract();
     }
 }

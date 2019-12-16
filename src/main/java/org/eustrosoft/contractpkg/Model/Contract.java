@@ -2,78 +2,192 @@ package org.eustrosoft.contractpkg.Model;
 
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 /*
 	Class witch contains all of needed to DOMINATOR company parameters
  */
 public class Contract {
 
-	Vector vec;
+    // Global parameters for initialize form
+    String[] productProperties;
+    BufferedReader reader;
+    String pathToDBFile;
 
-	public Contract(String [] str){
-		vec = new Vector();
+	// Initializer for class
+	public static Contract InitDBFromFile() {
+        return new Contract();
+    }
 
+    public static Contract InitNewRecordInDB(String comingString, char splitter){
+	    return new Contract(comingString, splitter);
+    }
+
+    // Private constructors
+    private Contract(){
+    	pathToDBFile = "E:\\AllProjects\\Java_projects\\Sources\\Java_product_projects\\" +
+				       "qr.qxyz\\db\\members\\EXAMPLESD\\0100D\\master.list.csv";
+    	setProductPropertiesLength(pathToDBFile);
 	}
 
+    private Contract(String inputStringToDB,char splitter){
+        this();
+        splitComingString(inputStringToDB,splitter);
+        matchPropertiesWithMassive(productProperties);
+    }
 
-
-
-	/*
-	// Global parameters to save product info
-	private BufferedReader reader;
-	Vector<String> infoMassiveForOneContract;
-
-	// Getter ( for a while here)
-	public Vector<String> getVector(){
-		return infoMassiveForOneContract;
-	}
-	public void setParam(int index, String s){
-		massiveOfParams()[index] = s;
-
-	}
-	//Constructors
-	public Contract(String[] par){
-		this();
-		initializeMassive(par);
-	}
-	
-	public Contract(){
-		infoMassiveForOneContract = new Vector<>();
+    private Contract(String[] initialProps){
+    	this();
+    	readFromDBFile(initialProps);
+    	matchPropertiesWithMassive(productProperties);
 	}
 
-	private void initializeMassive(String [] par){
-		try {
-			//infoMassiveForOneContract = new Vector<>(21);
-			for (int i = 0; i < par.length; i++) {
-				setParam(i, par[i]);
-				//infoMassiveForOneContract.add(par[i]);
+	private Contract(String[] str, String pathToFile) {
+    	this();
+		setProductPropertiesLength(pathToFile);
+	}
+
+    private Contract(String pathToFile) {
+    	this();
+        setProductPropertiesLength(pathToFile);
+    }
+
+    // Get length of parameters
+    private void setProductPropertiesLength(String pathToDBFile) {
+        String sBufferToGetProps;
+        int finalLengthOfProps = 0;
+        try {
+            reader = new BufferedReader(new FileReader(pathToDBFile));
+            if ((sBufferToGetProps = reader.readLine()) != null)
+                finalLengthOfProps = sBufferToGetProps.split(";").length;
+            productProperties = new String[finalLengthOfProps];
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }finally {
+        	try{
+        	    reader.close();
+        	}catch (IOException ex){
+        		ex.printStackTrace();
 			}
-			for (int i = par.length - 1; i < 21; i++) {
-				setParam(i, "null");
-				//infoMassiveForOneContract.add(null);
-			}
-		}catch(ArrayIndexOutOfBoundsException ex){
-			ex.printStackTrace();
-		}catch (Exception ex){
-			ex.printStackTrace();
 		}
+    }
 
+    // Fill starting array list with existing records in file
+    public ArrayList<Contract> fillProductProperties() throws NumberFormatException, IOException {
+        ArrayList<Contract> startingList = new ArrayList<>();
+		try {
+			reader = new BufferedReader(new FileReader
+					("E:\\AllProjects\\Java_projects\\Sources\\Java_product_projects\\" +
+							"qr.qxyz\\db\\members\\EXAMPLESD\\0100D\\master.list.csv"));
+			String stringForLine = "";
+			while ((stringForLine = reader.readLine()) != null) {
+				if (stringForLine.startsWith("#"))
+					continue;
+				else {
+					startingList.add(new Contract(stringForLine.split(";")));
+				}
+			}
+			return startingList;
+		}
+        finally {
+			try{
+				reader.close();
+			}catch (IOException ex){
+				ex.printStackTrace();
+			}
+		}
+    }
+
+    private void readFromDBFile(String [] props){
+    	if(props.length > productProperties.length) {
+			System.out.println("Properties length is more than product properties length!");
+			return;
+		}
+    	for(int i=0;i<props.length;i++){
+    		productProperties[i] = props[i];
+		}
 	}
 
-	private String [] massiveOfParams(){
-		String [] f = new String[]{
-				this.ZOID, this.ZVER, this.ZDATE, this.ZUID, this.ZSTA,
-				this.QR, this.CONTRACTNUM, this.contractdate,
-				this.MONEY, this.SUPPLIER, this.CLIENT, this.PRODTYPE,
-				this.MODEL, this.SN, this.prodate, this.shipdate, this.SALEDATE,
-				this.DEPARTUREDATE, this.WARRANTYSTART, this.WARRANTYEND, this.COMMENT};
-		return f;
+	private void splitComingString(String comingString, char splitter){
+	    String [] bufferForSplitterString = comingString.split(String.valueOf(splitter));
+
+	    for(int i=0;i< bufferForSplitterString.length ;i++)
+	        productProperties[i+5] = bufferForSplitterString[i];
+
+	    matchPropertiesWithMassive(productProperties);
+
+	    this.ZOID = "1";
+	    this.ZVER = "1";
+	    this.ZDATE = new Date().toString();
+	    this.ZUID = "1";
+	    this.ZSTA = "1";
+    }
+
+	private void matchPropertiesWithMassive(String [] productProperties) {
+        ZOID = productProperties[0];
+        ZVER = productProperties[1];
+        ZDATE = productProperties[2];
+        ZUID = productProperties[3];
+        ZSTA = productProperties[4];
+        QR = productProperties[5];
+        CONTRACTNUM = productProperties[6];
+        contractdate = productProperties[7];
+        MONEY = productProperties[8];
+        SUPPLIER = productProperties[9];
+        CLIENT = productProperties[10];
+        PRODTYPE = productProperties[11];
+        MODEL = productProperties[12];
+        SN = productProperties[13];
+        prodate = productProperties[14];
+        shipdate = productProperties[15];
+        SALEDATE = productProperties[16];
+        DEPARTUREDATE = productProperties[17];
+        WARRANTYSTART = productProperties[18];
+        WARRANTYEND = productProperties[19];
+        COMMENT = productProperties[20];
 	}
-	// ArrayList initializer
+
+    /*
+    // Global parameters to save product info
+    private BufferedReader reader;
+    Vector<String> infoMassiveForOneContract;
+
+    // Getter ( for a while here)
+    public Vector<String> getVector(){
+        return infoMassiveForOneContract;
+    }
+    public void setParam(int index, String s){
+        massiveOfParams()[index] = s;
+
+    }
+    //Constructors
+    public Contract(String[] par){
+        this();
+        initializeMassive(par);
+    }
+    public Contract(){
+        infoMassiveForOneContract = new Vector<>();
+    }
+    private void initializeMassive(String [] par){
+        try {
+            //infoMassiveForOneContract = new Vector<>(21);
+            for (int i = 0; i < par.length; i++) {
+                setParam(i, par[i]);
+                //infoMassiveForOneContract.add(par[i]);
+            }
+            for (int i = par.length - 1; i < 21; i++) {
+                setParam(i, "null");
+                //infoMassiveForOneContract.add(null);
+            }
+        }catch(ArrayIndexOutOfBoundsException ex){
+            ex.printStackTrace();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+    }
+*/
+    // ArrayList initializer
 	/*public ArrayList<Contract> Initialize() throws NumberFormatException, IOException {
 		ArrayList<Contract> startingList = new ArrayList<>();
 
@@ -91,22 +205,22 @@ public class Contract {
 		}
 		return startingList;
 	}*/
-	
-	////////////////////////
-	//       TIS          //
+
     ////////////////////////
-	/*
-	private String ZOID;
-	private String ZVER;
-	private String ZDATE;
-	private String ZUID;
-	private String ZSTA;
-	
+    //       TIS          //
+    ////////////////////////
+
+    private String ZOID;
+    private String ZVER;
+    private String ZDATE;
+    private String ZUID;
+    private String ZSTA;
+
     ////////////////////////
     //       Model        //
     ////////////////////////
     private CreateQR qrImg;
-    
+
     private String QR;
     private String CONTRACTNUM;
     private String contractdate;
@@ -123,192 +237,192 @@ public class Contract {
     private String WARRANTYSTART;
     private String WARRANTYEND;
     private String COMMENT;
-    
+
     ////////////////////////
 
     // QR Number in db
-  	public String getQr() {
-  		return QR;
-  	}
+    public String getQr() {
+        return QR;
+    }
 
-  	public void setQr(String qr) {
-  		this.QR = qr;
-  	}
-  	
-  	// Contract reference
-  	public String getContractum() {
-  		return CONTRACTNUM;
-  	}
+    public void setQr(String qr) {
+        this.QR = qr;
+    }
 
-  	public void setPtype(String contractum) {
-  		this.CONTRACTNUM = contractum;
-  	}
-  	
-  	//  Contract date
-  	public String getContractdate() {
-  		return contractdate;
-  	}
+    // Contract reference
+    public String getContractum() {
+        return CONTRACTNUM;
+    }
 
-  	public void setContractdate(String contractdate) {
-  		this.contractdate = contractdate;
-  	}
+    public void setPtype(String contractum) {
+        this.CONTRACTNUM = contractum;
+    }
 
-  	// Count of money
-  	public String getMoney() {
-  		return MONEY;
-  	}
+    //  Contract date
+    public String getContractdate() {
+        return contractdate;
+    }
 
-  	public void setMoney(String money) {
-  		this.MONEY = money;
-  	}
+    public void setContractdate(String contractdate) {
+        this.contractdate = contractdate;
+    }
 
-  	//  Supplier
-  	public String getSUPPLIER() {
-		return SUPPLIER;
-	}
+    // Count of money
+    public String getMoney() {
+        return MONEY;
+    }
 
-	public void setSUPPLIER(String sUPPLIER) {
-		SUPPLIER = sUPPLIER;
-	}
+    public void setMoney(String money) {
+        this.MONEY = money;
+    }
 
-	//  Client 
-	public String getCLIENT() {
-		return CLIENT;
-	}
+    //  Supplier
+    public String getSUPPLIER() {
+        return SUPPLIER;
+    }
 
-	public void setCLIENT(String cLIENT) {
-		CLIENT = cLIENT;
-	}
+    public void setSUPPLIER(String sUPPLIER) {
+        SUPPLIER = sUPPLIER;
+    }
 
-	//  Product type
-	public String getPRODTYPE() {
-		return PRODTYPE;
-	}
+    //  Client
+    public String getCLIENT() {
+        return CLIENT;
+    }
 
-	public void setPRODTYPE(String pRODTYPE) {
-		PRODTYPE = pRODTYPE;
-	}
+    public void setCLIENT(String cLIENT) {
+        CLIENT = cLIENT;
+    }
 
-	//  Model
-	public String getMODEL() {
-		return MODEL;
-	}
+    //  Product type
+    public String getPRODTYPE() {
+        return PRODTYPE;
+    }
 
-	public void setMODEL(String mODEL) {
-		MODEL = mODEL;
-	}
+    public void setPRODTYPE(String pRODTYPE) {
+        PRODTYPE = pRODTYPE;
+    }
 
-	//  Serial number
-	public String getSN() {
-		return SN;
-	}
+    //  Model
+    public String getMODEL() {
+        return MODEL;
+    }
 
-	public void setSN(String sN) {
-		SN = sN;
-	}
+    public void setMODEL(String mODEL) {
+        MODEL = mODEL;
+    }
 
-	//  Product date
-	public String getProdate() {
-		return prodate;
-	}
+    //  Serial number
+    public String getSN() {
+        return SN;
+    }
 
-	public void setProdate(String prodate) {
-		this.prodate = prodate;
-	}
-  	
-	//  Ship/Delivery date
-  	public String getShipdate() {
-  		return shipdate;
-  	}
+    public void setSN(String sN) {
+        SN = sN;
+    }
 
-  	public void setShipdate(String shipdate) {
-  		this.shipdate = shipdate;
-  	}
-  	
-  	//  Sale date
-  	public String getSALEDATE() {
-		return SALEDATE;
-	}
+    //  Product date
+    public String getProdate() {
+        return prodate;
+    }
 
-	public void setSALEDATE(String sALEDATE) {
-		SALEDATE = sALEDATE;
-	}
+    public void setProdate(String prodate) {
+        this.prodate = prodate;
+    }
 
-	// Departure date
-	public String getDEPARTUREDATE() {
-		return DEPARTUREDATE;
-	}
+    //  Ship/Delivery date
+    public String getShipdate() {
+        return shipdate;
+    }
 
-	public void setDEPARTUREDATE(String dEPARTUREDATE) {
-		DEPARTUREDATE = dEPARTUREDATE;
-	}
+    public void setShipdate(String shipdate) {
+        this.shipdate = shipdate;
+    }
 
-	//  Warranty period start
-	public String getWARRANTYSTART() {
-		return WARRANTYSTART;
-	}
+    //  Sale date
+    public String getSALEDATE() {
+        return SALEDATE;
+    }
 
-	public void setWARRANTYSTART(String wARRANTYSTART) {
-		WARRANTYSTART = wARRANTYSTART;
-	}
+    public void setSALEDATE(String sALEDATE) {
+        SALEDATE = sALEDATE;
+    }
 
-	// Warranty period end
-	public String getWARRANTYEND() {
-		return WARRANTYEND;
-	}
+    // Departure date
+    public String getDEPARTUREDATE() {
+        return DEPARTUREDATE;
+    }
 
-	public void setWARRANTYEND(String wARRANTYEND) {
-		WARRANTYEND = wARRANTYEND;
-	}
+    public void setDEPARTUREDATE(String dEPARTUREDATE) {
+        DEPARTUREDATE = dEPARTUREDATE;
+    }
 
-	//  Commentary to deal
-	public String getCOMMENT() {
-		return COMMENT;
-	}
+    //  Warranty period start
+    public String getWARRANTYSTART() {
+        return WARRANTYSTART;
+    }
 
-	public void setCOMMENT(String cOMMENT) {
-		COMMENT = cOMMENT;
-	}
+    public void setWARRANTYSTART(String wARRANTYSTART) {
+        WARRANTYSTART = wARRANTYSTART;
+    }
 
-	//  QR image
-  	public CreateQR getQrImg() {
-  		return qrImg;
-  	}
+    // Warranty period end
+    public String getWARRANTYEND() {
+        return WARRANTYEND;
+    }
 
-  	public void setQrImg(CreateQR qrImg) {
-  		this.qrImg = qrImg;
-  	}
-  	
-  	@Override
-  	public String toString() {
+    public void setWARRANTYEND(String wARRANTYEND) {
+        WARRANTYEND = wARRANTYEND;
+    }
 
-  		return null;
-  	}
-  	
-  	////////////////////////////////
-  	//            TIS             //
-  	////////////////////////////////
+    //  Commentary to deal
+    public String getCOMMENT() {
+        return COMMENT;
+    }
 
-	public String getZOID() {
-		return ZOID;
-	}
+    public void setCOMMENT(String cOMMENT) {
+        COMMENT = cOMMENT;
+    }
 
-	public String getZVER() {
-		return ZVER;
-	}
+    //  QR image
+    public CreateQR getQrImg() {
+        return qrImg;
+    }
 
-	public String getZDATE() {
-		return ZDATE;
-	}
+    public void setQrImg(CreateQR qrImg) {
+        this.qrImg = qrImg;
+    }
 
-	public String getZSTA() {
-		return ZSTA;
-	}
+    @Override
+    public String toString() {
 
-	public String getZUID() {
-		return ZUID;
-	}
-	*/
-	////////////////////////////////
-	
+        return null;
+    }
+
+    ////////////////////////////////
+    //            TIS             //
+    ////////////////////////////////
+
+    public String getZOID() {
+        return ZOID;
+    }
+
+    public String getZVER() {
+        return ZVER;
+    }
+
+    public String getZDATE() {
+        return ZDATE;
+    }
+
+    public String getZSTA() {
+        return ZSTA;
+    }
+
+    public String getZUID() {
+        return ZUID;
+    }
+
+    ////////////////////////////////
+
 }

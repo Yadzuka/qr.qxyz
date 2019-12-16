@@ -2,56 +2,42 @@ package org.eustrosoft.contractpkg.Controller;
 
 import org.eustrosoft.contractpkg.Model.Contract;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 /*
     Contract controller to manage contract date
  */
 public class ControllerContract {
 
-    public ArrayList<Contract> contracts;
-    Contract st = new Contract();
-
-    BufferedReader reader;
+    private ArrayList<Contract> contracts;
+    private Contract st = Contract.InitDBFromFile();
 
     public ControllerContract() {
-        contracts = new ArrayList<>();
-        InitializeCollection();
-       /* for(Contract c : contracts)
-            System.out.println(c.getVector());*/
+        initContactList();
     }
-
-    public Contract getContract(int id){
-        return contracts.get(id);
-    }
-    public void setContracts(Contract newContract){
-        contracts.add(newContract);
-    }
-    public void InitializeCollection() {
-        try {
-            reader = new BufferedReader(new FileReader("E:\\AllProjects\\Java_projects\\Sources\\Java_product_projects\\" +
-                    "qr.qxyz\\db\\members\\EXAMPLESD\\0100D\\master.list.csv"));
-            String buffer;
-            int index = 0;
-            while ((buffer = reader.readLine()) != null) {
-                if (buffer.startsWith("#"))
-                    continue;
-                // All is ok!
-                System.out.println(buffer);
-                st = new Contract(buffer.split(";"));
-                // Added null pointer (??) WUT
-                contracts.add(st);
-                System.out.println(st.getZOID());
-            }
-        } catch (IOException ex) {
+    private void initContactList(){
+        try{
+            setContracts(st.fillProductProperties());
+        }catch (IOException ex){
             ex.printStackTrace();
         }
     }
+    public void deleteRecord(int id){
+        getContracts().remove(id);
+    }
+    public Contract getContract(int id){
+        return getContracts().get(id);
+    }
+    public void setContracts(Contract newContract){
+        getContracts().add(newContract);
+    }
 
+    public ArrayList<Contract> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(ArrayList<Contract> contracts) {
+        this.contracts = contracts;
+    }
 }
