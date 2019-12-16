@@ -2,6 +2,7 @@ package org.eustrosoft.contractpkg.Model;
 
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /*
@@ -23,7 +24,7 @@ public class Contract {
 	    return new Contract(comingString, splitter);
     }
 
-    // Private constructors
+    // Private constructors to init class inside
     private Contract(){
     	pathToDBFile = "E:\\AllProjects\\Java_projects\\Sources\\Java_product_projects\\" +
 				       "qr.qxyz\\db\\members\\EXAMPLESD\\0100D\\master.list.csv";
@@ -52,12 +53,13 @@ public class Contract {
         setProductPropertiesLength(pathToFile);
     }
 
-    // Get length of parameters
+    // Get length of parameters || MAY BE USED TO INITIALIZE ANOTHER DB || (FUTURE)
     private void setProductPropertiesLength(String pathToDBFile) {
         String sBufferToGetProps;
         int finalLengthOfProps = 0;
         try {
-            reader = new BufferedReader(new FileReader(pathToDBFile));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(pathToDBFile),
+                                                            StandardCharsets.UTF_8)/*new FileReader(pathToDBFile)*/);
             if ((sBufferToGetProps = reader.readLine()) != null)
                 finalLengthOfProps = sBufferToGetProps.split(";").length;
             productProperties = new String[finalLengthOfProps];
@@ -73,12 +75,11 @@ public class Contract {
     }
 
     // Fill starting array list with existing records in file
-    public ArrayList<Contract> fillProductProperties() throws NumberFormatException, IOException {
+    public ArrayList<Contract> fillProductPropertiesInStart() throws NumberFormatException, IOException {
         ArrayList<Contract> startingList = new ArrayList<>();
 		try {
-			reader = new BufferedReader(new FileReader
-					("E:\\AllProjects\\Java_projects\\Sources\\Java_product_projects\\" +
-							"qr.qxyz\\db\\members\\EXAMPLESD\\0100D\\master.list.csv"));
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream(pathToDBFile),
+                                        StandardCharsets.UTF_8));
 			String stringForLine = "";
 			while ((stringForLine = reader.readLine()) != null) {
 				if (stringForLine.startsWith("#"))

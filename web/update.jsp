@@ -16,7 +16,7 @@
             <dd><input type="text" name="contractdate" value="${contract.contractdate}" placeholder="${contract.contractdate}" /></dd>
         </dl>
         <dl>
-            <dt>Contractum: </dt>
+            <dt>Contract: </dt>
             <dd><input type="text" name="contractum" value="${contract.contractum}" placeholder="${contract.contractum}" /></dd>
         </dl>
         <dl>

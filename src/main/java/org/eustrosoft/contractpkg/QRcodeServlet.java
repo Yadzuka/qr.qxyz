@@ -1,4 +1,4 @@
-package org.eustrosoft.contractpkg.Controller;
+package org.eustrosoft.contractpkg;
 
 import com.google.zxing.WriterException;
 import org.eustrosoft.contractpkg.Model.CreateQR;
@@ -23,8 +23,8 @@ public class QRcodeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         OutputStream str= resp.getOutputStream();
-        String range = req.getParameter("range");
-        String toQR = "http://qr.qxyz.ru/?q=" + range + "001"; // The last path needed to get from the existing folders
+        String codingString = req.getParameter("codingString");
+        String toQR = "http://qr.qxyz.ru/?q=" + codingString; // The last path needed to get from the existing folders
         try {
             qr = new CreateQR(toQR,resp.getOutputStream());
             qr.createQRImage();

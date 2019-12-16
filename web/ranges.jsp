@@ -10,10 +10,7 @@
     <title><%=f%> ranges</title>
 </head>
 <body>
-<span>
-    <h3>Привет!</h3>
     <!-- PREVIOUS (BAD) VARIANT WITHOUT USING CONTROLLER! -->
-
     <%--<%!
         // Global parameters for read *.html and ranges
         Ranges r = new Ranges();
@@ -65,7 +62,6 @@
 
     <!-- I think that's better -->
     <%
-        request.setCharacterEncoding("UTF-8");
         RangesController rController = new RangesController(response.getWriter(),f);
         rController.getInfo();
     %>

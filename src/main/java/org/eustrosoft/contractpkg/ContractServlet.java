@@ -16,7 +16,7 @@ public class ContractServlet extends HttpServlet{
 	
 	@Override
 	public void init() throws ServletException {
-	    Members members = new Members();
+	    member = new Members();
 		super.init();
 
 		/*try {
@@ -27,7 +27,7 @@ public class ContractServlet extends HttpServlet{
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, 
-			             HttpServletResponse resp) 
+			             HttpServletResponse resp)
 			             throws ServletException, IOException {
 	    req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("");
@@ -51,7 +51,7 @@ public class ContractServlet extends HttpServlet{
                           HttpServletResponse resp)
                           throws ServletException, IOException {
 	    req.setCharacterEncoding("UTF-8");
-	    if(req.getParameter("submit") == "submit"){
+	    if(req.getParameter("submit").equals("submit")){
 
         }
 

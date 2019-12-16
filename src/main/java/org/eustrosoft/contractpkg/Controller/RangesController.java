@@ -1,6 +1,7 @@
 package org.eustrosoft.contractpkg.Controller;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /*
     Ranges controller to manage ranges system
@@ -34,7 +35,8 @@ public class RangesController {
             if (allDirectories[i].getName().endsWith("html")) {
 
                 pathToHtml = allDirectories[i].getAbsolutePath();
-                bufferedReader = new BufferedReader(new FileReader(new File(pathToHtml)));
+                bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(pathToHtml),
+                                                        StandardCharsets.UTF_8));
 
                 while ((bufferForWriting = bufferedReader.readLine()) != null) {
                     sb.append(bufferForWriting);
@@ -48,6 +50,7 @@ public class RangesController {
         return bufferForWriting;
 
         // Future variant with non-static link to csv (db) file
+
             /*if(allDirectories[i].isDirectory() && allDirectories[i].getName() != "global") {
                 pathToQR = allDirectories[i].getAbsolutePath();
                 File qrDirectoryCode = new File(pathToQR);

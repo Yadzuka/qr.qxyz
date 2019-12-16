@@ -16,13 +16,15 @@ public class ControllerContract {
     public ControllerContract() {
         initContactList();
     }
+
     private void initContactList(){
         try{
-            setContracts(st.fillProductProperties());
+            setContracts(st.fillProductPropertiesInStart());
         }catch (IOException ex){
             ex.printStackTrace();
         }
     }
+
     public void deleteRecord(int id){
         getContracts().remove(id);
     }
