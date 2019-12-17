@@ -1,10 +1,14 @@
 /* Member's table parameters */
 .memberstable{
-    border: blue;
+    border: aliceblue;
     margin: 10px;
-    border-left-style: wave;
+    border-left-style: groove;
+    border-right-style: groove;
     align: 3 ;
-    background-color: greenyellow;
-    font-family: "Bookman Old Style";
-    font-size: 35px;
+    background-color: white;
+    font-family: "Times New Roman";
+    font-size: 15px;
+    width: 99%;
+    text-align: center;
+    align-content: center;
 }

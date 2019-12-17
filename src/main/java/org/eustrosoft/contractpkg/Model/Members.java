@@ -19,8 +19,7 @@ public class Members {
 
 	// Set member's counter
 	public int getCounterOfMembers() {
-		directories = new File("E:\\AllProjects\\Java_projects\\Sources" +
-				                         "\\Java_product_projects\\qr.qxyz\\db\\members");
+		directories = new File("/home/yadzuka/workspace/qr.qxyz/qr.qxyz/db/members/");
 		listOfMembers = directories.listFiles();
 		
 		return listOfMembers.length;

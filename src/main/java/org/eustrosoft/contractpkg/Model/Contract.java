@@ -26,8 +26,8 @@ public class Contract {
 
     // Private constructors to init class inside
     private Contract(){
-    	pathToDBFile = "E:\\AllProjects\\Java_projects\\Sources\\Java_product_projects\\" +
-				       "qr.qxyz\\db\\members\\EXAMPLESD\\0100D\\master.list.csv";
+    	pathToDBFile = "/home/yadzuka/workspace/qr.qxyz/qr.qxyz"
+    			+ "/db/members/EXAMPLESD/0100D/master.list.csv";
     	setProductPropertiesLength(pathToDBFile);
 	}
 

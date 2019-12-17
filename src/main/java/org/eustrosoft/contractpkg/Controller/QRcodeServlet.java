@@ -54,7 +54,7 @@ public class QRcodeServlet extends HttpServlet {
         image.createGraphics();
         Graphics2D graphics = (Graphics2D) image.getGraphics();
         // BG color
-        graphics.setColor(Color.white);
+        graphics.setColor(Color.WHITE);
         // Filling the plain
         graphics.fillRect(0, 0, matrixWidth, matrixWidth);
 

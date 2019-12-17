@@ -5,6 +5,7 @@
 <html>
 <head>
     <title>Starting table</title>
+    <link rel="stylesheet" type="text/css" href="css/webcss.css"/>
 </head>
 <body>
 	<%!
@@ -14,9 +15,10 @@
 		Contract bufferForComparison;
 	%>
 
-    <table border="2">
+    <table class="memberstable" border="2" width="60%">
    		<caption><h3>Таблица товаров</h3></caption>
    	<tr>
+   		<td>Функции</td>
     	<td>QR Image</td>
     	<td>QR code</td>
     	<td>Contract</td>
@@ -41,11 +43,12 @@
 			int secondCompositor;
 			// Prints only last version of object
 			for(int i = 0; i < availableContracts.size(); i++){
+			
 				bufferToPrintProperties = availableContracts.get(i);
 				bufferForComparison = availableContracts.get(i);
 
 				// Works with all ZOID objects
-				for(int j = 0; j < availableContracts.size()-1;j++){
+				for(int j = 0; j < availableContracts.size();j++){
 					firstCompositor = Integer.parseInt(bufferToPrintProperties.getZOID());
 					secondCompositor = Integer.parseInt(availableContracts.get(j).getZOID());
 
@@ -64,6 +67,7 @@
 				secondCompositor = Integer.parseInt(bufferToPrintProperties.getZVER());
 				if(firstCompositor < secondCompositor)
 					continue;
+					
 				// For one iteration
 				/*if(availableContracts.get(i + 1).getZVER() != null) {
 					firstCompositor = Integer.parseInt(availableContracts.get(i).getZVER());
@@ -73,11 +77,18 @@
 						continue;
 				}*/
 		%>
+		
    		<tr>
+   			<td>
+   				<a href="update.jsp?table=<%=request.getParameter("table")%>&range=<%=request.getParameter("range")%>&contractum=<%=i%>">
+   					Просмотр
+   				</a>
+   			</td>
    			<td>
 				<img src="engine/qr?codingString=<%=bufferToPrintProperties.getQr()%>"/>
 			</td>
-    		<td><a href = "<%="http://qr.qxyz.ru/?q="+bufferToPrintProperties.getQr()%>">
+    		<td>
+    			<a href = "<%="http://qr.qxyz.ru/?q="+bufferToPrintProperties.getQr()%>">
 				<%="http://qr.qxyz.ru/?q="+bufferToPrintProperties.getQr()%>
 				</a>
 			</td>
@@ -102,7 +113,7 @@
 		%>
   	</table>
 
-	<a href="update.jsp">Go to update</a>
+	<a href="update.jsp">Add new</a>
 	<a href="ranges.jsp?member=<%=request.getParameter("table")%>">Go back</a>
 </body>
 </html>

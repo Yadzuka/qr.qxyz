@@ -24,9 +24,8 @@ public class Ranges {
     public String getOneRange(String pathName){
 
         // Set paths and initialize variables
-        pathToRanges = new File("E:\\AllProjects\\Java_projects\\Sources\\" +
-                "Java_product_projects\\qr.qxyz\\db\\members\\" + pathName +"\\");
-        pathToCSV = new File(pathToRanges.getAbsolutePath() + "\\0100D");
+        pathToRanges = new File("/home/yadzuka/workspace/qr.qxyz/qr.qxyz/db/members/" + pathName +"/");
+        pathToCSV = new File(pathToRanges.getAbsolutePath() + "/0100D");
         allDirectories  = pathToRanges.listFiles();
 
         if(!pathToCSV.exists()) {
@@ -38,7 +37,7 @@ public class Ranges {
 
     // Splitter for folder name
     private String getRange(String way){
-        String [] paths = way.split(Pattern.quote("\\"));
+        String [] paths = way.split(Pattern.quote("/"));
 
         return paths[paths.length-1];
     }
