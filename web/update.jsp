@@ -5,165 +5,102 @@
 <%@ page import="java.util.ArrayList" %>
 <html>
 <head>
-    <title>Update</title>
+	<title>
+		Update record
+	</title>
 </head>
 <body>
-<%
-	String []goBackParameters = { 
-	request.getParameter("table"),
-	request.getParameter("range")};
+	<%
+		String tableParam = request.getParameter("table"); 
+		String rangeParam = rangeParam = request.getParameter("range");
+		String contractParam = request.getParameter("contractum");
+		int parsedContractParam = Integer.parseInt(contractParam);
 		
-	String reqNumForRecord = request.getParameter("contractum");
-	int contractIdInAllContracts = Integer.parseInt(reqNumForRecord);
-
-	ControllerContract contractController = new ControllerContract();
-	//ArrayList<Contract> availableContracts = contractController.getContracts();
-	Contract showingContract = contractController.getContract(contractIdInAllContracts);
-%>
-<section>
+		int parsedContractParam = Integer.parseInt(contractParam);
+		ControllerContract contractController = new ControllerContract();
+		Contract bufferToShowModel = contractController.getContract(parsedContractParam);
 		
-	   		<dl>
-	   			<dt>QR CODE IMAGE: </dt>
-				<dt>
-					<img src="engine/qr?codingString=<%=showingContract.getQr()%>"/>
-				</dt>
-			</dl>
-    		<dl>
-    			<dt>QR CODE REFERENCE: </dt>
-    			<dt>
-    				<a href = "<%="http://qr.qxyz.ru/?q="+showingContract.getQr()%>">
-						<%="http://qr.qxyz.ru/?q="+showingContract.getQr()%>
-					</a>
-				</dt>
-			</dl>
-   	 		<dl>
-   	 			<dt>CONTRACT: </dt>
-   	 			<dt><%=showingContract.getContractum()%></dt>
-   	 		</dl>
-   	 		   	<dt>CONTRACT DATE: </dt>
-   	 			<dt><%=showingContract.getContractdate()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>AMOUNT OF MONEY: </dt>
-   	 			<dt><%=showingContract.getMoney()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>SUPPLIER: </dt>
-   	 			<dt><%=showingContract.getSUPPLIER()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>CLIENT: </dt>
-   	 			<dt><%=showingContract.getCLIENT()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>PRODUCTION TYPE: </dt>
-   	 			<dt><%=showingContract.getPRODTYPE()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>MODEL: </dt>
-   	 			<dt><%=showingContract.getMODEL()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>SERIAL NUMBER: </dt>
-   	 			<dt><%=showingContract.getSN()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>PRODUCTION DATE: </dt>
-   	 			<dt><%=showingContract.getProdate()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>DELIVER DATE: </dt>
-   	 			<dt><%=showingContract.getShipdate()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>SALE DATE: </dt>
-   	 			<dt><%=showingContract.getSALEDATE()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>DEPARTURE DATE: </dt>
-   	 			<dt><%=showingContract.getDEPARTUREDATE()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>WARRANTY START DATE: </dt>
-   	 			<dt><%=showingContract.getWARRANTYSTART()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>WARRANTY END DATE: </dt>
-   	 			<dt><%=showingContract.getWARRANTYEND()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>COMMENT: </dt>
-   	 			<dt><%=showingContract.getCOMMENT()%></dt>
-   	 		</dl>
-	<!--
-    <form method="post" action="memberstable.jsp?action=submit">
-        <dl>
-            <dt>Client name: </dt>
-            <dd><input type="text" name="clientname"  /></dd>
-        </dl>
-        <dl>
-            <dt>Contract date: </dt>
-            <dd><input type="text" name="contractdate"  /></dd>
-        </dl>
-        <dl>
-            <dt>Contract: </dt>
-            <dd><input type="text" name="contractum"  /></dd>
-        </dl>
-        <dl>
-            <dt>Departure: </dt>
-            <dd><input type="text" name="departure"  /></dd>
-        </dl>
-        <dl>
-            <dt>Model: </dt>
-            <dd><input type="text" name="model"  /></dd>
-        </dl>
-        <dl>
-            <dt>Prod date: </dt>
-            <dd><input type="text" name="prodate"  /></dd>
-        </dl>
-        <dl>
-            <dt>Prod type: </dt>
-            <dd><input type="text" name="prodtype" " /></dd>
-        </dl>
-        <dl>
-            <dt>Serial number: </dt>
-            <dd><input type="text" name="sn"  /></dd>
-        </dl>
-        <dl>
-            <dt>Sale date: </dt>
-            <dd><input type="text" name="saledate"  /></dd>
-        </dl>
-        <dl>
-            <dt>Money: </dt>
-            <dd><input type="text" name="money"  /></dd>
-        </dl>
-        <dl>
-            <dt>Supplier: </dt>
-            <dd><input type="text" name="supplier"  /></dd>
-        </dl>
-        <dl>
-            <dt>Ship date: </dt>
-            <dd><input type="text" name="shipdate" /></dd>
-        </dl>
-        <dl>
-            <dt>Warranty start: </dt>
-            <dd><input type="text" name="warrstart"  /></dd>
-        </dl>
-        <dl>
-            <dt>Warranty end: </dt>
-            <dd><input type="text" name="warrend"  /></dd>
-        </dl>
+		StringBuffer finalStringToSendForm = "";
+	%>
+	
+	<h1> Изменить запись </h1>
 
-        <dl>
-            <dt>Commentary: </dt>
-            <dd><input type="text" name="commentary"  /></dd>
-        </dl>
-        <button type="submit">Save</button>
-    </form>
-    -->
-    <a href="memberstable.jsp?table=<%=goBackParameters[0]%>&range=<%=goBackParameters[1]%>">
-    back
-    </a>
-</section>
+		<dl>
+   	 		<dt>Контракт: </dt>
+   	 		<dt><input type="text" name="name" value="${bot.name}" placeholder="<%=bufferToShowModel.getContractum()%>" /></dt>
+   	 	</dl>
+   	 		<dt>Дата контракта: </dt>
+   	 		<dt><input type="text" name="name" value="${bot.name}" placeholder="<%=bufferToShowModel.getContractdate()%>" /></dt>
+   	 	</dl>
+   	 	<dl>
+   	 		<dt>Сумма: </dt>
+   	 		<dt><input type="text" name="name" value="${bot.name}" placeholder="<%=bufferToShowModel.getMoney()%>" /></dt>
+   	 	</dl>
+   	 	<dl>
+   	 		<dt>Поставщик: </dt>
+   	 		<dt><input type="text" name="name" value="${bot.name}" placeholder="<%=bufferToShowModel.getSUPPLIER()%>" /></dt>
+   	 	</dl>
+   	 	<dl>
+   	 		<dt>Клиент: </dt>
+   	 		<dt><input type="text" name="name" value="${bot.name}" placeholder="<%=bufferToShowModel.getCLIENT()%>" /></dt>
+   	 	</dl>
+   	 	<dl>
+   	 		<dt>Тип продукта: </dt>
+   	 		<dt><input type="text" name="name" value="${bot.name}" placeholder="<%=bufferToShowModel.getPRODTYPE()%>" /></dt>
+   	 	</dl>
+   	 	<dl>
+   	 		<dt>Модель: </dt>
+   	 		<dt><input type="text" name="name" value="${bot.name}" placeholder="<%=bufferToShowModel.getMONEY()%>" /></dt>
+   	 	</dl>
+   	 	<dl>
+   	 		<dt>Номер серии: </dt>
+   	 		<dt><input type="text" name="name" value="${bot.name}" placeholder="<%=bufferToShowModel.getSN()%>" /></dt>
+   	 	</dl>
+   	 	<dl>
+   	 		<dt>Дата изготовления: </dt>
+   	 		<dt><input type="text" name="name" value="${bot.name}" placeholder="<%=bufferToShowModel.getProdate()%>" /></dt>
+   	 	</dl>
+   	 	<dl>
+   	 		<dt>Дата привоза: </dt>
+   	 		<dt><input type="text" name="name" value="${bot.name}" placeholder="<%=bufferToShowModel.getShipdate()%>" /></dt>
+   	 	</dl>
+   	 	<dl>
+   	 		<dt>Дата продажи: </dt>
+   	 		<dt><input type="text" name="name" value="${bot.name}" placeholder="<%=bufferToShowModel.getSALEDATE()%>" /></dt>
+   	 	</dl>
+   	 	<dl>
+   	 		<dt>Дата отсыла: </dt>
+   	 		<dt><input type="text" name="name" value="${bot.name}" placeholder="<%=bufferToShowModel.getDEPARTUREDATE()%>" /></dt>
+   	 	</dl>
+   	 	<dl>
+   	 		<dt>Начало гарантии: </dt>
+   	 		<dt><input type="text" name="name" value="${bot.name}" placeholder="<%=bufferToShowModel.getWARRANTYSTART()%>" /></dt>
+   	 	</dl>
+   	 	<dl>
+   	 		<dt>Конец гарантии: </dt>
+   	 		<dt><input type="text" name="name" value="${bot.name}" placeholder="<%=bufferToShowModel.getWARRANTYEND()%>" /></dt>
+   	 	</dl>
+   	 	<dl>
+   	 		<dt>Комментарий: </dt>
+   	 		<dt><input type="text" name="name" value="${bot.name}" placeholder="<%=bufferToShowModel.getCOMMENT()%>" /></dt>
+   	 	</dl>
+		<button context="Применить">
+		
+			<%
+				Contract newContract = Contract.InitNewRecordInDB(
+					finalStringToSendForm, ';', bufferToShowModel.getZOID, 
+							(bufferToShowModel.getZVER+1),"yadzuka", "N");
+			%>
+		</button>
+
+	<%
+	
+		// Correction level
+		
+		/*
+		
+		*/
+	%>
+	
 </body>
 </html>

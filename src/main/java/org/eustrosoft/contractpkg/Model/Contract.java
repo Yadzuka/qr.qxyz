@@ -20,8 +20,10 @@ public class Contract {
         return new Contract();
     }
 
-    public static Contract InitNewRecordInDB(String comingString, char splitter){
-	    return new Contract(comingString, splitter);
+    public static Contract InitNewRecordInDB(String comingString, char splitter,String ZOID, String ZVER,
+			String ZUID, String ZSTA){
+	    return new Contract(comingString, splitter,ZOID, ZVER,
+				ZUID, ZSTA);
     }
 
     // Private constructors to init class inside
@@ -31,10 +33,11 @@ public class Contract {
     	setProductPropertiesLength(pathToDBFile);
 	}
 
-    private Contract(String inputStringToDB,char splitter){
+    private Contract(String inputStringToDB,char splitter,String ZOID, String ZVER,
+			String ZUID, String ZSTA){
         this();
-        splitComingString(inputStringToDB,splitter);
-        matchPropertiesWithMassive(productProperties);
+        splitComingString(inputStringToDB,splitter,ZOID,ZVER,
+    			ZUID,ZSTA);
     }
 
     private Contract(String[] initialProps){
@@ -75,7 +78,8 @@ public class Contract {
     }
 
     // Fill starting array list with existing records in file
-    public ArrayList<Contract> fillProductPropertiesInStart() throws NumberFormatException, IOException {
+    public ArrayList<Contract> fillProductPropertiesInStart() 
+    		throws NumberFormatException, IOException {
         ArrayList<Contract> startingList = new ArrayList<>();
 		try {
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(pathToDBFile),
@@ -109,19 +113,21 @@ public class Contract {
 		}
 	}
 
-	private void splitComingString(String comingString, char splitter){
+	private void splitComingString(String comingString, char splitter,String ZOID, String ZVER,
+			String ZUID, String ZSTA){
 	    String [] bufferForSplitterString = comingString.split(String.valueOf(splitter));
 
 	    for(int i=0;i< bufferForSplitterString.length ;i++)
 	        productProperties[i+5] = bufferForSplitterString[i];
-
+	    
+	    productProperties[0] = ZOID;
+	    productProperties[1] = ZVER;
+	    productProperties[2] = new Date().toString();
+	    productProperties[3] = ZUID;
+	    productProperties[4] = ZSTA;
+	    
 	    matchPropertiesWithMassive(productProperties);
-
-	    this.ZOID = "1";
-	    this.ZVER = "1";
-	    this.ZDATE = new Date().toString();
-	    this.ZUID = "1";
-	    this.ZSTA = "1";
+	    createRecordInDB(comingString);
     }
 
 	private void matchPropertiesWithMassive(String [] productProperties) {
@@ -147,7 +153,16 @@ public class Contract {
         WARRANTYEND = productProperties[19];
         COMMENT = productProperties[20];
 	}
-
+	
+	private void createRecordInDB(String stringToWrite) {
+		try(PrintWriter out = new PrintWriter(
+				new BufferedWriter(new FileWriter(pathToDBFile, true)))) {
+		    out.println(stringToWrite);
+		} catch (IOException e) {
+		    System.err.println(e);
+		}
+	}
+	
     /*
     // Global parameters to save product info
     private BufferedReader reader;

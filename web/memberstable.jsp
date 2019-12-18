@@ -80,7 +80,7 @@
 		
    		<tr>
    			<td>
-   				<a href="update.jsp?table=<%=request.getParameter("table")%>&range=<%=request.getParameter("range")%>&contractum=<%=i%>">
+   				<a href="modelview.jsp?table=<%=request.getParameter("table")%>&range=<%=request.getParameter("range")%>&contractum=<%=i%>">
    					Просмотр
    				</a>
    			</td>
