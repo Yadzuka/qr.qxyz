@@ -17,149 +17,84 @@
 	Contract bufferToShowModel = contractController.getContract(parsedContractParam);
 %>
 <section>
-		
-	   		<dl>
-	   			<dt>Картинка qr: </dt>
-				<dt>
+		<table>
+	   		<tr>
+	   			<td>Картинка qr: </td>
+				<td>
 					<img src="engine/qr?codingString=<%=bufferToShowModel.getQr()%>"/>
-				</dt>
-			</dl>
-    		<dl>
-    			<dt>Ссылка: </dt>
-    			<dt>
-    				<a href = "<%="http://qr.qxyz.ru/?q="+bufferToShowModel.getQr()%>">
+				</td>
+			</tr>
+    		<tr>
+    			<td>Ссылка: </td>
+    			<td>
+    				<a target="_" href="<%="http://qr.qxyz.ru/?q="+bufferToShowModel.getQr()%>">
 						<%="http://qr.qxyz.ru/?q="+bufferToShowModel.getQr()%>
 					</a>
-				</dt>
-			</dl>
-   	 		<dl>
-   	 			<dt>Контракт: </dt>
-   	 			<dt><%=bufferToShowModel.getContractum()%></dt>
-   	 		</dl>
-   	 		   	<dt>Дата контракта: </dt>
-   	 			<dt><%=bufferToShowModel.getContractdate()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>Сумма: </dt>
-   	 			<dt><%=bufferToShowModel.getMoney()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>Поставщик: </dt>
-   	 			<dt><%=bufferToShowModel.getSUPPLIER()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>Клиент: </dt>
-   	 			<dt><%=bufferToShowModel.getCLIENT()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>Тип продукта: </dt>
-   	 			<dt><%=bufferToShowModel.getPRODTYPE()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>Модель: </dt>
-   	 			<dt><%=bufferToShowModel.getMODEL()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>Номер серии: </dt>
-   	 			<dt><%=bufferToShowModel.getSN()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>Дата изготовления: </dt>
-   	 			<dt><%=bufferToShowModel.getProdate()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>Дата привоза: </dt>
-   	 			<dt><%=bufferToShowModel.getShipdate()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>Дата продажи: </dt>
-   	 			<dt><%=bufferToShowModel.getSALEDATE()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>Дата отсыла: </dt>
-   	 			<dt><%=bufferToShowModel.getDEPARTUREDATE()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>Начало гарантии: </dt>
-   	 			<dt><%=bufferToShowModel.getWARRANTYSTART()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>Конец гарантии: </dt>
-   	 			<dt><%=bufferToShowModel.getWARRANTYEND()%></dt>
-   	 		</dl>
-   	 		<dl>
-   	 			<dt>Комментарий: </dt>
-   	 			<dt><%=bufferToShowModel.getCOMMENT()%></dt>
-   	 		</dl>
-	<!--
-    <form method="post" action="memberstable.jsp?action=submit">
-        <dl>
-            <dt>Client name: </dt>
-            <dd><input type="text" name="clientname"  /></dd>
-        </dl>
-        <dl>
-            <dt>Contract date: </dt>
-            <dd><input type="text" name="contractdate"  /></dd>
-        </dl>
-        <dl>
-            <dt>Contract: </dt>
-            <dd><input type="text" name="contractum"  /></dd>
-        </dl>
-        <dl>
-            <dt>Departure: </dt>
-            <dd><input type="text" name="departure"  /></dd>
-        </dl>
-        <dl>
-            <dt>Model: </dt>
-            <dd><input type="text" name="model"  /></dd>
-        </dl>
-        <dl>
-            <dt>Prod date: </dt>
-            <dd><input type="text" name="prodate"  /></dd>
-        </dl>
-        <dl>
-            <dt>Prod type: </dt>
-            <dd><input type="text" name="prodtype" " /></dd>
-        </dl>
-        <dl>
-            <dt>Serial number: </dt>
-            <dd><input type="text" name="sn"  /></dd>
-        </dl>
-        <dl>
-            <dt>Sale date: </dt>
-            <dd><input type="text" name="saledate"  /></dd>
-        </dl>
-        <dl>
-            <dt>Money: </dt>
-            <dd><input type="text" name="money"  /></dd>
-        </dl>
-        <dl>
-            <dt>Supplier: </dt>
-            <dd><input type="text" name="supplier"  /></dd>
-        </dl>
-        <dl>
-            <dt>Ship date: </dt>
-            <dd><input type="text" name="shipdate" /></dd>
-        </dl>
-        <dl>
-            <dt>Warranty start: </dt>
-            <dd><input type="text" name="warrstart"  /></dd>
-        </dl>
-        <dl>
-            <dt>Warranty end: </dt>
-            <dd><input type="text" name="warrend"  /></dd>
-        </dl>
-
-        <dl>
-            <dt>Commentary: </dt>
-            <dd><input type="text" name="commentary"  /></dd>
-        </dl>
-        <button type="submit">Save</button>
-    </form>
-    -->
+				</td>
+			</tr>
+   	 		<tr>
+   	 			<td>Контракт: </td>
+   	 			<td><%=bufferToShowModel.getContractum()%></td>
+   	 		</tr>
+   	 		   	<td>Дата контракта: </td>
+   	 			<td><%=bufferToShowModel.getContractdate()%></td>
+   	 		</tr>
+   	 		<tr>
+   	 			<td>Сумма: </td>
+   	 			<td><%=bufferToShowModel.getMoney()%></td>
+   	 		</tr>
+   	 		<tr>
+   	 			<td>Поставщик: </td>
+   	 			<td><%=bufferToShowModel.getSUPPLIER()%></td>
+   	 		</tr>
+   	 		<tr>
+   	 			<td>Клиент: </td>
+   	 			<td><%=bufferToShowModel.getCLIENT()%></td>
+   	 		</tr>
+   	 		<tr>
+   	 			<td>Тип продукта: </td>
+   	 			<td><%=bufferToShowModel.getPRODTYPE()%></td>
+   	 		</tr>
+   	 		<tr>
+   	 			<td>Модель: </td>
+   	 			<td><%=bufferToShowModel.getMODEL()%></td>
+   	 		</tr>
+   	 		<tr>
+   	 			<td>Номер серии: </td>
+   	 			<td><%=bufferToShowModel.getSN()%></td>
+   	 		</tr>
+   	 		<tr>
+   	 			<td>Дата изготовления: </td>
+   	 			<td><%=bufferToShowModel.getProdate()%></td>
+   	 		</tr>
+   	 		<tr>
+   	 			<td>Дата привоза: </td>
+   	 			<td><%=bufferToShowModel.getShipdate()%></td>
+   	 		</tr>
+   	 		<tr>
+   	 			<td>Дата продажи: </td>
+   	 			<td><%=bufferToShowModel.getSALEDATE()%></td>
+   	 		</tr>
+   	 		<tr>
+   	 			<td>Дата отсыла: </td>
+   	 			<td><%=bufferToShowModel.getDEPARTUREDATE()%></td>
+   	 		</tr>
+   	 		<tr>
+   	 			<td>Начало гарантии: </td>
+   	 			<td><%=bufferToShowModel.getWARRANTYSTART()%></td>
+   	 		</tr>
+   	 		<tr>
+   	 			<td>Конец гарантии: </td>
+   	 			<td><%=bufferToShowModel.getWARRANTYEND()%></td>
+   	 		</tr>
+   	 		<tr>
+   	 			<td>Комментарий: </td>
+   	 			<td><%=bufferToShowModel.getCOMMENT()%></td>
+   	 		</tr>
+   	 	</table>
     <a href="memberstable.jsp?table=<%=tableParam%>&range=<%=rangeParam%>">
     	Назад
-    </a>
+    </a>&nbsp;
     <a href="update.jsp?table=<%=tableParam%>&range=<%=rangeParam%>&contractum=<%=contractParam%>">
     	Изменить запись
     </a>

@@ -16,7 +16,7 @@ public class ContractServlet extends HttpServlet{
 	
 	@Override
 	public void init() throws ServletException {
-	    member = new Members();
+
 		super.init();
 
 		/*try {
