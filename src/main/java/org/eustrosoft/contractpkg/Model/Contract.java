@@ -27,7 +27,7 @@ public class Contract {
     }
 
     // Private constructors to init class inside
-    private Contract(){
+    public Contract(){
     	pathToDBFile = "/home/yadzuka/workspace/qr.qxyz/qr.qxyz"
     			+ "/db/members/EXAMPLESD/0100D/master.list.csv";
     	setProductPropertiesLength(pathToDBFile);
@@ -154,73 +154,19 @@ public class Contract {
         COMMENT = productProperties[20];
 	}
 	
-	private void createRecordInDB(String stringToWrite) {
-		try(PrintWriter out = new PrintWriter(
-				new BufferedWriter(new FileWriter(pathToDBFile, true)))) {
-		    out.println(stringToWrite);
+	public void createRecordInDB(String stringToWrite) {
+		try
+		{
+			PrintWriter db = new PrintWriter
+					(
+					 new BufferedWriter(new FileWriter(pathToDBFile, true))
+					);
+			try(PrintWriter out = db){ out.println(stringToWrite); out.flush(); }
 		} catch (IOException e) {
 		    System.err.println(e);
 		}
+		 // ? {try {o; }catch(e) {} finally {o.close();} } try {
 	}
-	
-    /*
-    // Global parameters to save product info
-    private BufferedReader reader;
-    Vector<String> infoMassiveForOneContract;
-
-    // Getter ( for a while here)
-    public Vector<String> getVector(){
-        return infoMassiveForOneContract;
-    }
-    public void setParam(int index, String s){
-        massiveOfParams()[index] = s;
-
-    }
-    //Constructors
-    public Contract(String[] par){
-        this();
-        initializeMassive(par);
-    }
-    public Contract(){
-        infoMassiveForOneContract = new Vector<>();
-    }
-    private void initializeMassive(String [] par){
-        try {
-            //infoMassiveForOneContract = new Vector<>(21);
-            for (int i = 0; i < par.length; i++) {
-                setParam(i, par[i]);
-                //infoMassiveForOneContract.add(par[i]);
-            }
-            for (int i = par.length - 1; i < 21; i++) {
-                setParam(i, "null");
-                //infoMassiveForOneContract.add(null);
-            }
-        }catch(ArrayIndexOutOfBoundsException ex){
-            ex.printStackTrace();
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-
-    }
-*/
-    // ArrayList initializer
-	/*public ArrayList<Contract> Initialize() throws NumberFormatException, IOException {
-		ArrayList<Contract> startingList = new ArrayList<>();
-
-		reader = new BufferedReader(new FileReader
-				("E:\\AllProjects\\Java_projects\\Sources\\Java_product_projects\\" +
-						"qr.qxyz\\db\\members\\EXAMPLESD\\0100D\\master.list.csv"));
-		String stringForLine="";
-		String [] massiveOfParams = new String [21];
-		while((stringForLine = reader.readLine()) != null) {
-			if(stringForLine.startsWith("#"))
-				continue;
-			else{
-				startingList.add(new Contract(stringForLine.split(";")));
-			}
-		}
-		return startingList;
-	}*/
 
     ////////////////////////
     //       TIS          //
@@ -268,9 +214,9 @@ public class Contract {
     public String getContractum() {
         return CONTRACTNUM;
     }
-
-    public void setPtype(String contractum) {
-        this.CONTRACTNUM = contractum;
+    
+    public void setContractum(String contract) {
+    	this.CONTRACTNUM = contract;
     }
 
     //  Contract date
@@ -401,8 +347,11 @@ public class Contract {
 
     @Override
     public String toString() {
-
-        return null;
+        return ZOID+";"+ZVER+";"+ZDATE+";"+ZUID+";"
+        +ZSTA+";"+QR+";"+CONTRACTNUM+";"+contractdate+";"+MONEY+";"
+        +SUPPLIER+";"+CLIENT+";"+PRODTYPE+";"+MODEL+";"+SN+";"+prodate+";"
+        +shipdate+";"+SALEDATE+";"+DEPARTUREDATE+";"
+        +WARRANTYSTART+";"+WARRANTYEND+";"+COMMENT;
     }
 
     ////////////////////////////////
@@ -429,6 +378,25 @@ public class Contract {
         return ZUID;
     }
 
+    public void setZOID(String ZOID) {
+        this.ZOID = ZOID;
+    }
+
+    public void setZVER(String ZVER) {
+        this.ZVER= ZVER ;
+    }
+
+    public void setZDATE(String ZDATE) {
+        this.ZDATE = ZDATE;
+    }
+
+    public void setZSTA(String ZSTA) {
+        this.ZSTA= ZSTA ;
+    }
+
+    public void setZUID(String ZUID) {
+        this.ZUID = ZUID;
+    }
     ////////////////////////////////
 
 }

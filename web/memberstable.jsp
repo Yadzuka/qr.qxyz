@@ -113,7 +113,9 @@
 		%>
   	</table>
 
-	<a href="update.jsp">Add new</a>
+	<a href="update.jsp?range=&zoid=<%=availableContracts.size()%>&action=create">
+    	Добавить новую запись
+    </a>
 	<a href="ranges.jsp?member=<%=request.getParameter("table")%>">Go back</a>
 </body>
 </html>

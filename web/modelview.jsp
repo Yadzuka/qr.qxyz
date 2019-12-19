@@ -13,10 +13,10 @@
 	String rangeParam = rangeParam = request.getParameter("range");
 	String contractParam = request.getParameter("contractum");
 	int parsedContractParam = Integer.parseInt(contractParam);
+	
 	ControllerContract contractController = new ControllerContract();
 	Contract bufferToShowModel = contractController.getContract(parsedContractParam);
 %>
-<section>
 		<table>
 	   		<tr>
 	   			<td>Картинка qr: </td>
@@ -95,9 +95,8 @@
     <a href="memberstable.jsp?table=<%=tableParam%>&range=<%=rangeParam%>">
     	Назад
     </a>&nbsp;
-    <a href="update.jsp?table=<%=tableParam%>&range=<%=rangeParam%>&contractum=<%=contractParam%>">
+    <a href="update.jsp?member=<%=tableParam%>&range=<%=rangeParam%>&zoid=<%=contractParam%>&action=edit">
     	Изменить запись
     </a>
-</section>
 </body>
 </html>
