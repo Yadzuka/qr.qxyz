@@ -1,6 +1,6 @@
 <%@ 
 	page contentType="text/html; charset=UTF-8" 
-	import="org.eustrosoft.contractpkg.Controller.ControllerContract" 
+	import="org.eustrosoft.contractpkg.Controller.ControllerContracts"
 	import="org.eustrosoft.contractpkg.Model.Contract" 
 	import="java.util.*" 
 %>
@@ -32,7 +32,7 @@
 </head>
 <body>
 <div>
-<a href="/Contracts-1.0-SNAPSHOT/">go home
+<a href="/Contracts_1_0_SNAPSHOT_war/">go home
 </a>
 </div>
 
@@ -54,7 +54,7 @@ int parsedContractParam = Integer.parseInt(zoidParam);
 Contract bufferToShowModel = new Contract();
 
 
-ControllerContract contractController = new ControllerContract();
+ControllerContracts contractController = new ControllerContracts();
 ArrayList<Contract> contractsArray = contractController.getContracts();
 
 	if(request.getParameter(BTN_EDIT) != null) action = ACTION_EDIT;
@@ -77,7 +77,6 @@ ArrayList<Contract> contractsArray = contractController.getContracts();
 	  bufferToShowModel = contractController.getContract(parsedContractParam);
 	}
  	if(ACTION_REFRESH.equals(action) || ACTION_SAVE.equals(action)){
- 	out.println(bufferToShowModel.toString());
  	// STD_HEADER fields
 	bufferToShowModel.setZOID(request.getParameter("ZOID"));
 	bufferToShowModel.setZVER(request.getParameter("ZVER"));
@@ -116,7 +115,6 @@ ArrayList<Contract> contractsArray = contractController.getContracts();
  	  }
  	  
  	  bufferToShowModel.createRecordInDB(bufferToShowModel.toString());
- 	  out.println(bufferToShowModel.toString());
  	}
  		
 	%>

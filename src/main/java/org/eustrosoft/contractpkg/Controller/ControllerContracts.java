@@ -8,18 +8,19 @@ import java.util.ArrayList;
 /*
     Contract controller to manage contract date
  */
-public class ControllerContract {
+public class ControllerContracts {
 
     private ArrayList<Contract> contracts;
-    private Contract st = Contract.InitDBFromFile();
+    private Contract contractInitializerFromFile;
 
-    public ControllerContract() {
+    public ControllerContracts() {
         initContactList();
     }
 
     private void initContactList(){
         try{
-            setContracts(st.fillProductPropertiesInStart());
+            contractInitializerFromFile = new Contract();
+            setContracts(contractInitializerFromFile.fillProductPropertiesInStart());
         }catch (IOException ex){
             ex.printStackTrace();
         }
@@ -28,9 +29,11 @@ public class ControllerContract {
     public void deleteRecord(int id){
         getContracts().remove(id);
     }
+
     public Contract getContract(int id){
         return getContracts().get(id);
     }
+
     public void setContracts(Contract newContract){
         getContracts().add(newContract);
     }

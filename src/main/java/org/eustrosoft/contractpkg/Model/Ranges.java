@@ -1,9 +1,6 @@
 package org.eustrosoft.contractpkg.Model;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.PrintWriter;
 import java.util.regex.Pattern;
 
 /*
@@ -24,7 +21,7 @@ public class Ranges {
     public String getOneRange(String pathName){
 
         // Set paths and initialize variables
-        pathToRanges = new File("/home/yadzuka/workspace/qr.qxyz/qr.qxyz/db/members/" + pathName +"/");
+        pathToRanges = new File("/home/yadzuka/workspace/Java_projects/qr.qxyz/db/members/" + pathName +"/");
         pathToCSV = new File(pathToRanges.getAbsolutePath() + "/0100D");
         allDirectories  = pathToRanges.listFiles();
 

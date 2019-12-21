@@ -15,11 +15,6 @@ public class Contract {
     BufferedReader reader;
     String pathToDBFile;
 
-	// Initializer for class
-	public static Contract InitDBFromFile() {
-        return new Contract();
-    }
-
     public static Contract InitNewRecordInDB(String comingString, char splitter,String ZOID, String ZVER,
 			String ZUID, String ZSTA){
 	    return new Contract(comingString, splitter,ZOID, ZVER,
@@ -28,7 +23,7 @@ public class Contract {
 
     // Private constructors to init class inside
     public Contract(){
-    	pathToDBFile = "/home/yadzuka/workspace/qr.qxyz/qr.qxyz"
+    	pathToDBFile = "/home/yadzuka/workspace/Java_projects/qr.qxyz"
     			+ "/db/members/EXAMPLESD/0100D/master.list.csv";
     	setProductPropertiesLength(pathToDBFile);
 	}
@@ -81,12 +76,13 @@ public class Contract {
     public ArrayList<Contract> fillProductPropertiesInStart() 
     		throws NumberFormatException, IOException {
         ArrayList<Contract> startingList = new ArrayList<>();
+
 		try {
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(pathToDBFile),
                                         StandardCharsets.UTF_8));
 			String stringForLine = "";
 			while ((stringForLine = reader.readLine()) != null) {
-				if (stringForLine.startsWith("#"))
+				if (stringForLine.startsWith("#") || startingList.equals(""))
 					continue;
 				else {
 					startingList.add(new Contract(stringForLine.split(";")));

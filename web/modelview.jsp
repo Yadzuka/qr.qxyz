@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="org.eustrosoft.contractpkg.Controller.ControllerContract"%>
-<%@ page import="org.eustrosoft.contractpkg.Controller.ControllerContract" %>
+<%@ page import="org.eustrosoft.contractpkg.Controller.ControllerContracts" %>
 <%@ page import="org.eustrosoft.contractpkg.Model.Contract" %>
 <%@ page import="java.util.ArrayList" %>
 <html>
@@ -14,7 +13,7 @@
 	String contractParam = request.getParameter("contractum");
 	int parsedContractParam = Integer.parseInt(contractParam);
 	
-	ControllerContract contractController = new ControllerContract();
+	ControllerContracts contractController = new ControllerContracts();
 	Contract bufferToShowModel = contractController.getContract(parsedContractParam);
 %>
 		<table>

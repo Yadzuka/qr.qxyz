@@ -15,14 +15,14 @@
 			<td>Organization names</td>
 		</tr>
 	<%!
+
 		// Set global parameters
 		Members members = new Members(); // Use member's bean to taking all need information
-		int counter = members.getCounterOfMembers(); // Counter of members
 		String [] allRegisteredMembers = members.getCompanyNames(); // Get all members ( from existing directories )
 	%>
 	<%
 		// Cycle for each member ( directory ) in the main (members) path
-		for(int i =0; i < counter; i++) {
+		for(int i =0; i <  members.getMembersCounter(); i++) {
 			// It also sets directory name in GET parameter
 	%>
 		<tr>

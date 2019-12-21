@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="org.eustrosoft.contractpkg.Controller.ControllerContract" %>
-<%@ page import="org.eustrosoft.contractpkg.Model.Contract" %>
+<%@ page import="org.eustrosoft.contractpkg.Model.*" %>
+<%@ page import="org.eustrosoft.contractpkg.Controller.*" %>
 <%@ page import="java.util.ArrayList" %>
 <html>
 <head>
@@ -9,7 +9,7 @@
 </head>
 <body>
 	<%!
-		ControllerContract contractController = new ControllerContract();
+		ControllerContracts contractController = new ControllerContracts();
 		ArrayList<Contract> availableContracts = contractController.getContracts();
 		Contract bufferToPrintProperties;
 		Contract bufferForComparison;
@@ -113,7 +113,7 @@
 		%>
   	</table>
 
-	<a href="update.jsp?range=&zoid=<%=availableContracts.size()%>&action=create">
+	<a href="update.jsp?zoid=<%=availableContracts.size()%>&action=edit">
     	Добавить новую запись
     </a>
 	<a href="ranges.jsp?member=<%=request.getParameter("table")%>">Go back</a>

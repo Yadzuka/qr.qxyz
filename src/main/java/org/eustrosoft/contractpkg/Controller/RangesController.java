@@ -20,12 +20,11 @@ public class RangesController {
 
     // Set paths and initialize variables
     public RangesController(PrintWriter printWriter, String context){
-        pathToRanges = new File("/home/yadzuka/workspace/qr.qxyz/qr.qxyz/db/members/" + context + "/");
+        pathToRanges = new File("/home/yadzuka/workspace/Java_projects/qr.qxyz/db/members/" + context + "/");
         pathToCSV = new File(pathToRanges.getAbsolutePath() + "/0100D/master.list.csv");
         allDirectories = pathToRanges.listFiles();
         sb = new StringBuilder();
         this.printWriter = printWriter;
-
     }
 
     public String getInfo() throws IOException {
