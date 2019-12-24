@@ -141,7 +141,7 @@
 		}
 		if(SZ_NULL.equals(bufferToShowModel.getQr()) || bufferToShowModel.getQr() == null){
 			Random randLinkCreater = new Random();
-			String firstPartLink = "http://qr.qxyz.ru?q="+rangeParam;
+			String firstPartLink = rangeParam;
 			StringBuilder secondLinkPart = new StringBuilder();
 			String allLink = "";
 			do{
@@ -168,6 +168,9 @@
 			bufferToShowModel.setZVER((++numberOfSecondProductVersion).toString());
 		}
 		bufferToShowModel.createRecordInDB(bufferToShowModel.toString());
+
+		request.getRequestDispatcher("/productstable.jsp?member="+memberParam+"&range="+rangeParam)
+				.forward(request,response);
 	}
 	%>
 <h1> Изменить запись </h1>
@@ -191,13 +194,12 @@
     		<tr>
     			<td>Ссылка: </td>
     			<td>
-    				<a target="_" name="Qr" value=<%="http://qr.qxyz.ru/?q="+bufferToShowModel.getQr()%>
-							href="<%="http://qr.qxyz.ru/?q="+bufferToShowModel.getQr()%>">
+    				<a target="_" href="<%="http://qr.qxyz.ru/?q="+bufferToShowModel.getQr()%>">
 						<%="http://qr.qxyz.ru/?q="+bufferToShowModel.getQr()%>
 					</a>
 				</td>
 				<td>
-					<input name="Qr" value="http://qr.qxyz.ru/?q="<%=bufferToShowModel.getQr()%>/>
+					<input name="Qr" value="<%=bufferToShowModel.getQr()%>"/>
 				</td>
 			</tr>
    	 		<tr>

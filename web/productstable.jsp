@@ -17,7 +17,7 @@
 	%>
 
 	<ul>
-		<li><a href="update.jsp?action=create&range=<%=request.getParameter("range")%>">Создать новую запись</a></li>
+		<li><a href="update.jsp?member=<%=member%>&range=<%=request.getParameter("range")%>&action=create">Создать новую запись</a></li>
 		<li><a href="ranges.jsp?member=<%=request.getParameter("member")%>">Назад</a></li>
 	</ul>
 
