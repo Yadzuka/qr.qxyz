@@ -1,6 +1,6 @@
 <%@ page import="org.eustrosoft.contractpkg.Model.Members" %>
 <%@ page import="java.io.File" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="errorpage.jsp" %>
 <html>
 <head>
 	<title>

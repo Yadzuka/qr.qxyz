@@ -40,7 +40,6 @@
                    	<webResources>
             			<resource>
               				<directory>web</directory>
-              				
             			</resource>
           			</webResources>
                 </configuration>
@@ -52,6 +51,7 @@
           		<configuration>
           			<resource>
           				<directory>src/main/java/org/eustrosoft/contractpkg/*.java</directory>
+                        <directory>web/css/*.css</directory>
           			</resource>
           		</configuration>
         </plugin>

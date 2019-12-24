@@ -8,17 +8,23 @@
     <link rel="stylesheet" type="text/css" href="css/webcss.css"/>
 </head>
 <body>
-	<%!
+	<%
 		ControllerContracts contractController = new ControllerContracts();
 		ArrayList<Contract> availableContracts = contractController.getContracts();
+		String member = request.getParameter("member");
 		Contract bufferToPrintProperties;
 		Contract bufferForComparison;
 	%>
 
-    <table class="memberstable" border="2" width="60%">
+	<ul>
+		<li><a href="update.jsp?action=create">Создать новую запись</a></li>
+		<li><a href="ranges.jsp?member=<%=request.getParameter("member")%>">Назад</a></li>
+	</ul>
+
+	<table class="memberstable" border="2" width="60%">
    		<caption><h3>Таблица товаров</h3></caption>
    	<tr>
-   		<td>Функции</td>
+   		<td>Полная информация</td>
     	<td>QR Image</td>
     	<td>QR code</td>
     	<td>Contract</td>
@@ -29,21 +35,13 @@
     	<td>Production type</td>
     	<td>Model</td>
     	<td>Serial number</td>
-    	<td>Production date</td>
- 		<td>Delivery date</td>
-    	<td>Sale date</td>
-		<td>Departure date</td>
-    	<td>Warranty start</td>
-    	<td>Warranty end</td>
-    	<td>Commentary</td>
    	</tr>
 		<%
-
 			int firstCompositor;
 			int secondCompositor;
 			// Prints only last version of object
 			for(int i = 0; i < availableContracts.size(); i++){
-			
+
 				bufferToPrintProperties = availableContracts.get(i);
 				bufferForComparison = availableContracts.get(i);
 
@@ -67,20 +65,12 @@
 				secondCompositor = Integer.parseInt(bufferToPrintProperties.getZVER());
 				if(firstCompositor < secondCompositor)
 					continue;
-					
-				// For one iteration
-				/*if(availableContracts.get(i + 1).getZVER() != null) {
-					firstCompositor = Integer.parseInt(availableContracts.get(i).getZVER());
-					secondCompositor = Integer.parseInt(availableContracts.get(i + 1).getZVER());
-
-					if (firstCompositor < secondCompositor)
-						continue;
-				}*/
 		%>
 		
    		<tr>
    			<td>
-   				<a href="modelview.jsp?table=<%=request.getParameter("table")%>&range=<%=request.getParameter("range")%>&contractum=<%=i%>">
+   				<a href="productview.jsp?member=<%=request.getParameter("member")%>
+   				&range=<%=request.getParameter("range")%>&contract=<%=i%>">
    					Просмотр
    				</a>
    			</td>
@@ -100,22 +90,10 @@
 			<td><%=bufferToPrintProperties.getPRODTYPE()%></td>
 			<td><%=bufferToPrintProperties.getMODEL()%></td>
 			<td><%=bufferToPrintProperties.getSN()%></td>
-			<td><%=bufferToPrintProperties.getProdate()%></td>
-			<td><%=bufferToPrintProperties.getShipdate()%></td>
-			<td><%=bufferToPrintProperties.getSALEDATE()%></td>
-			<td><%=bufferToPrintProperties.getDEPARTUREDATE()%></td>
-			<td><%=bufferToPrintProperties.getWARRANTYSTART()%></td>
-			<td><%=bufferToPrintProperties.getWARRANTYEND()%></td>
-			<td><%=bufferToPrintProperties.getCOMMENT()%></td>
    		</tr>
 		<%
 			}
 		%>
   	</table>
-
-	<a href="update.jsp?zoid=<%=availableContracts.size()%>&action=edit">
-    	Добавить новую запись
-    </a>
-	<a href="ranges.jsp?member=<%=request.getParameter("table")%>">Go back</a>
 </body>
 </html>

@@ -16,9 +16,9 @@ public class Contract {
     String pathToDBFile;
 
     public static Contract InitNewRecordInDB(String comingString, char splitter,String ZOID, String ZVER,
-			String ZUID, String ZSTA){
+			String ZUID, String ZSTA, PrintWriter writer){
 	    return new Contract(comingString, splitter,ZOID, ZVER,
-				ZUID, ZSTA);
+				ZUID, ZSTA, writer);
     }
 
     // Private constructors to init class inside
@@ -29,10 +29,10 @@ public class Contract {
 	}
 
     private Contract(String inputStringToDB,char splitter,String ZOID, String ZVER,
-			String ZUID, String ZSTA){
+			String ZUID, String ZSTA, PrintWriter writer){
         this();
         splitComingString(inputStringToDB,splitter,ZOID,ZVER,
-    			ZUID,ZSTA);
+    			ZUID,ZSTA, writer);
     }
 
     private Contract(String[] initialProps){
@@ -110,7 +110,7 @@ public class Contract {
 	}
 
 	private void splitComingString(String comingString, char splitter,String ZOID, String ZVER,
-			String ZUID, String ZSTA){
+			String ZUID, String ZSTA, PrintWriter writer){
 	    String [] bufferForSplitterString = comingString.split(String.valueOf(splitter));
 
 	    for(int i=0;i< bufferForSplitterString.length ;i++)
@@ -123,7 +123,7 @@ public class Contract {
 	    productProperties[4] = ZSTA;
 	    
 	    matchPropertiesWithMassive(productProperties);
-	    createRecordInDB(comingString);
+	    createRecordInDB(comingString, writer);
     }
 
 	private void matchPropertiesWithMassive(String [] productProperties) {
@@ -150,14 +150,15 @@ public class Contract {
         COMMENT = productProperties[20];
 	}
 	
-	public void createRecordInDB(String stringToWrite) {
+	public void createRecordInDB(String stringToWrite, PrintWriter writer) {
 		try
 		{
 			PrintWriter db = new PrintWriter
 					(
 					 new BufferedWriter(new FileWriter(pathToDBFile, true))
 					);
-			try(PrintWriter out = db){ out.println(stringToWrite); out.flush(); }
+			try(PrintWriter out = db){ out.println(stringToWrite); out.flush();
+                writer.append("Record has benn created into data base"); writer.flush(); writer.close(); }
 		} catch (IOException e) {
 		    System.err.println(e);
 		}

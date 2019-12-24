@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="errorpage.jsp" %>
 <%@ page import="java.io.*" %>
 <%@ page import="org.eustrosoft.contractpkg.Controller.RangesController" %>
 <html>
@@ -24,7 +24,7 @@
         <tr>
             <td>
                 <!-- Go to table with old context to get info about -->
-                <a href="memberstable.jsp?table=<%=f%>&range=<%="0100D"%>">
+                <a href="productstable.jsp?member=<%=f%>&range=<%="0100D"%>">
                     <%="0100D"%>
                 </a>
             </td>
@@ -32,7 +32,7 @@
     </table>
     <!-- Go back to table -->
     <a href="members.jsp">
-        Go back!
+        Назад
     </a>
 
 </span>

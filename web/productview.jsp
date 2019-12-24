@@ -1,18 +1,23 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"  %>
 <%@ page import="org.eustrosoft.contractpkg.Controller.ControllerContracts" %>
 <%@ page import="org.eustrosoft.contractpkg.Model.Contract" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.text.ParseException" %>
 <html>
 <head>
-    <title>Update</title>
+    <title>Product viewing</title>
 </head>
 <body>
 <%
-	String tableParam = request.getParameter("table"); 
-	String rangeParam = rangeParam = request.getParameter("range");
-	String contractParam = request.getParameter("contractum");
-	int parsedContractParam = Integer.parseInt(contractParam);
-	
+	String memberParam = request.getParameter("member");
+	String rangeParam = request.getParameter("range");
+	String contractParam = request.getParameter("contract");
+	int parsedContractParam = 0;
+	try {
+		 parsedContractParam = Integer.parseInt(contractParam);
+	}catch(Exception ex){
+		request.getRequestDispatcher("errorpage.jsp").forward(request,response);
+	}
 	ControllerContracts contractController = new ControllerContracts();
 	Contract bufferToShowModel = contractController.getContract(parsedContractParam);
 %>
@@ -91,10 +96,10 @@
    	 			<td><%=bufferToShowModel.getCOMMENT()%></td>
    	 		</tr>
    	 	</table>
-    <a href="memberstable.jsp?table=<%=tableParam%>&range=<%=rangeParam%>">
+    <a href="productstable.jsp?member=<%=memberParam%>&range=<%=rangeParam%>">
     	Назад
     </a>&nbsp;
-    <a href="update.jsp?member=<%=tableParam%>&range=<%=rangeParam%>&zoid=<%=contractParam%>&action=edit">
+    <a href="update.jsp?member=<%=memberParam%>&range=<%=rangeParam%>&zoid=<%=contractParam%>&action=edit">
     	Изменить запись
     </a>
 </body>

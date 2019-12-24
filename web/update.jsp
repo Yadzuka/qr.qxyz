@@ -2,8 +2,11 @@
 	page contentType="text/html; charset=UTF-8" 
 	import="org.eustrosoft.contractpkg.Controller.ControllerContracts"
 	import="org.eustrosoft.contractpkg.Model.Contract" 
-	import="java.util.*" 
+	import="java.io.PrintWriter"
 %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Arrays" %>
+<%@ page import="java.util.Date" %>
 <%!
 	// Actions that may be invoked
 	public final String ACTION_EDIT = "edit";
@@ -44,79 +47,91 @@
  response.setHeader("Pragma","no-cache");
  response.setDateHeader("Expires",expire_time);
  request.setCharacterEncoding("UTF-8");
-// 
+//
+	ControllerContracts contractController = new ControllerContracts();
+	ArrayList<Contract> contractsArray = contractController.getContracts();
+    PrintWriter writer = response.getWriter();
 
-String memberParam = request.getParameter("member");
-String rangeParam = request.getParameter("range");
-String zoidParam = request.getParameter("zoid");
-String action = request.getParameter("action");
-int parsedContractParam = Integer.parseInt(zoidParam);
-Contract bufferToShowModel = new Contract();
+	int parsedContractParam;
+	String memberParam = request.getParameter("member");
+	String rangeParam = request.getParameter("range");
+	String zoidParam = request.getParameter("zoid");
+	String action = request.getParameter("action");
+	if(!SZ_NULL.equals(zoidParam) && zoidParam != null)
+		parsedContractParam = Integer.parseInt(zoidParam);
+	else
+		parsedContractParam = contractsArray.size();
+	Contract bufferToShowModel = new Contract();
 
-
-ControllerContracts contractController = new ControllerContracts();
-ArrayList<Contract> contractsArray = contractController.getContracts();
-
-	if(request.getParameter(BTN_EDIT) != null) action = ACTION_EDIT;
-	if(request.getParameter(BTN_CREATE) != null) action = ACTION_CREATE;
-	if(request.getParameter(BTN_SAVE) != null) action = ACTION_SAVE;
-	if(request.getParameter(BTN_REFRESH) != null) action = ACTION_REFRESH;
-	if(!Arrays.asList(ACTIONS).contains(action))action=null;
-		//..
+	if (request.getParameter(BTN_EDIT) != null) action = ACTION_EDIT;
+	if (request.getParameter(BTN_CREATE) != null) action = ACTION_CREATE;
+	if (request.getParameter(BTN_SAVE) != null) action = ACTION_SAVE;
+	if (request.getParameter(BTN_REFRESH) != null) action = ACTION_REFRESH;
+	if (!Arrays.asList(ACTIONS).contains(action)) action = null;
 	//default action
-	if(action == null) action="edit"; //edit, create, save, refresh
-	if(ACTION_CANCEL.equals(action)){
-		 //response.sendRedirection();
-		 response.sendRedirect
-		 ("/update.jsp?member="+memberParam+"&range="
-		 +rangeParam+
-		 "&zoid="+zoidParam+"&action=edit");
-		 //.forward(request, response);
+	if (action == null) action = "edit"; //edit, create, save, refresh
+
+	if (ACTION_CANCEL.equals(action)) {
+		//response.sendRedirection();
+		response.sendRedirect("/productview.jsp");
+
 	}
- 	if(ACTION_EDIT.equals(action)){
-	  bufferToShowModel = contractController.getContract(parsedContractParam);
+	if(ACTION_REFRESH.equals(action)){
+		bufferToShowModel = contractController.getContract(parsedContractParam);
 	}
- 	if(ACTION_REFRESH.equals(action) || ACTION_SAVE.equals(action)){
- 	// STD_HEADER fields
-	bufferToShowModel.setZOID(request.getParameter("ZOID"));
-	bufferToShowModel.setZVER(request.getParameter("ZVER"));
-	bufferToShowModel.setZDATE(new Date().toString());
-	bufferToShowModel.setZUID("yadzuka");
-	bufferToShowModel.setZSTA("N");	 
- 	// data fields
- 	bufferToShowModel.setQr(request.getParameter("Qr"));
-	bufferToShowModel.setContractum(request.getParameter("member"));
-	bufferToShowModel.setContractdate(request.getParameter("Contractdate"));
-	bufferToShowModel.setMoney(request.getParameter("Money"));
-	bufferToShowModel.setSUPPLIER(request.getParameter("SUPPLIER"));
-	bufferToShowModel.setCLIENT(request.getParameter("CLIENT"));
-	bufferToShowModel.setPRODTYPE(request.getParameter("PRODTYPE"));
-	bufferToShowModel.setMODEL(request.getParameter("MODEL"));
-	bufferToShowModel.setSN(request.getParameter("SN"));
-	bufferToShowModel.setProdate(request.getParameter("Prodate"));
-	bufferToShowModel.setShipdate(request.getParameter("Shipdate"));
-	bufferToShowModel.setSALEDATE(request.getParameter("SALEDATE"));
-	bufferToShowModel.setDEPARTUREDATE(request.getParameter("DEPARTUREDATE"));
-	bufferToShowModel.setWARRANTYSTART(request.getParameter("WARRANTYSTART"));
-	bufferToShowModel.setWARRANTYEND(request.getParameter("WARRANTYEND"));
-	bufferToShowModel.setCOMMENT(request.getParameter("COMMENT"));
+	if (ACTION_EDIT.equals(action)) {
+		bufferToShowModel = contractController.getContract(parsedContractParam);
 	}
- 	if(ACTION_CREATE.equals(action) || ACTION_SAVE.equals(action)){
- 	  if(SZ_NULL.equals(bufferToShowModel.getZOID()) ||  bufferToShowModel.getZOID() == null){ 
- 	  Integer buffer = Integer.parseInt(contractsArray.get(contractsArray.size()-1).getZOID());
- 	  buffer++;
- 	  bufferToShowModel.setZOID(buffer.toString());
- 	  }
- 	  if(SZ_NULL.equals(bufferToShowModel.getZVER()) ||  bufferToShowModel.getZVER() == null) 
- 	  { bufferToShowModel.setZVER("1"); }
- 	  else {
- 	   Integer index = Integer.parseInt(bufferToShowModel.getZVER()) + 1;
- 	   bufferToShowModel.setZVER(index.toString());
- 	  }
- 	  
- 	  bufferToShowModel.createRecordInDB(bufferToShowModel.toString());
- 	}
- 		
+	if (ACTION_SAVE.equals(action)) {
+		// STD_HEADER fields
+		bufferToShowModel.setZOID(request.getParameter("ZOID"));
+		bufferToShowModel.setZVER(request.getParameter("ZVER"));
+		bufferToShowModel.setZDATE(new Date().toString());
+		bufferToShowModel.setZUID("yadzuka");
+		bufferToShowModel.setZSTA("N");
+		// data fields
+		bufferToShowModel.setQr(request.getParameter("Qr"));
+		bufferToShowModel.setContractum(request.getParameter("contract"));
+		bufferToShowModel.setContractdate(request.getParameter("Contractdate"));
+		bufferToShowModel.setMoney(request.getParameter("Money"));
+		bufferToShowModel.setSUPPLIER(request.getParameter("SUPPLIER"));
+		bufferToShowModel.setCLIENT(request.getParameter("CLIENT"));
+		bufferToShowModel.setPRODTYPE(request.getParameter("PRODTYPE"));
+		bufferToShowModel.setMODEL(request.getParameter("MODEL"));
+		bufferToShowModel.setSN(request.getParameter("SN"));
+		bufferToShowModel.setProdate(request.getParameter("Prodate"));
+		bufferToShowModel.setShipdate(request.getParameter("Shipdate"));
+		bufferToShowModel.setSALEDATE(request.getParameter("SALEDATE"));
+		bufferToShowModel.setDEPARTUREDATE(request.getParameter("DEPARTUREDATE"));
+		bufferToShowModel.setWARRANTYSTART(request.getParameter("WARRANTYSTART"));
+		bufferToShowModel.setWARRANTYEND(request.getParameter("WARRANTYEND"));
+		bufferToShowModel.setCOMMENT(request.getParameter("COMMENT"));
+	}
+	if (ACTION_CREATE.equals(action)) {
+		if (SZ_NULL.equals(bufferToShowModel.getZOID()) || bufferToShowModel.getZOID() == null) {
+			Integer buffer = Integer.parseInt(contractsArray.get(contractsArray.size() - 1).getZOID());
+			buffer++;
+			bufferToShowModel.setZOID(buffer.toString());
+		}
+		if (SZ_NULL.equals(bufferToShowModel.getZVER()) || bufferToShowModel.getZVER() == null) {
+			bufferToShowModel.setZVER("1");
+		} else {
+			Integer index = Integer.parseInt(bufferToShowModel.getZVER()) + 1;
+			bufferToShowModel.setZVER(index.toString());
+		}
+
+		//bufferToShowModel.createRecordInDB(bufferToShowModel.toString());
+	}
+	if(ACTION_SAVE.equals(action)){
+		if("1".equals(bufferToShowModel.getZVER()))
+			;
+		else {
+			String bufferToUpdateVersion = bufferToShowModel.getZVER();
+			Integer numberOfSecondProductVersion = Integer.parseInt(bufferToUpdateVersion);
+			bufferToShowModel.setZVER((++numberOfSecondProductVersion).toString());
+		}
+		bufferToShowModel.createRecordInDB(bufferToShowModel.toString(), writer);
+	}
 	%>
 <h1> Изменить запись </h1>
 	
@@ -139,14 +154,14 @@ ArrayList<Contract> contractsArray = contractController.getContracts();
     		<tr>
     			<td>Ссылка: </td>
     			<td>
-    				<a target="_" href="<%="http://qr.qxyz.ru/?q="+bufferToShowModel.getQr()%>">
+    				<a target="_" name="Qr" href="<%="http://qr.qxyz.ru/?q="+bufferToShowModel.getQr()%>">
 						<%="http://qr.qxyz.ru/?q="+bufferToShowModel.getQr()%>
 					</a>
 				</td>
 			</tr>
    	 		<tr>
    	 			<td>Контракт: </td>
-   	 			<td><input name="member" value="<%=bufferToShowModel.getContractum()%>"></td>
+   	 			<td><input name="contract" value="<%=bufferToShowModel.getContractum()%>"></td>
    	 		</tr>
    	 		   	<td>Дата контракта: </td>
    	 			<td><input name="Contractdate" value="<%=bufferToShowModel.getContractdate()%>"></td>
@@ -203,6 +218,12 @@ ArrayList<Contract> contractsArray = contractController.getContracts();
    	 			<td>Комментарий: </td>
    	 			<td><input name="COMMENT" value="<%=bufferToShowModel.getCOMMENT()%>"></td>
    	 		</tr>
+			<tr>
+				<a href="productstable.jsp?member=<%=memberParam%>&range=<%=rangeParam%>">
+					Назад к списку контрактов
+				</a>
+
+			</tr>
    	 	</table>
 </form>
 

@@ -1,14 +1,33 @@
 /* Member's table parameters */
 .memberstable{
-    border: aliceblue;
-    margin: 10px;
-    border-left-style: groove;
-    border-right-style: groove;
-    align: 3 ;
-    background-color: white;
-    font-family: "Times New Roman";
-    font-size: 15px;
-    width: 99%;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 18px;
+    background: white;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    margin: 0 auto 20px;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
     text-align: center;
-    align-content: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
 }
