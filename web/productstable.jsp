@@ -17,14 +17,14 @@
 	%>
 
 	<ul>
-		<li><a href="update.jsp?action=create">Создать новую запись</a></li>
+		<li><a href="update.jsp?action=create&range=<%=request.getParameter("range")%>">Создать новую запись</a></li>
 		<li><a href="ranges.jsp?member=<%=request.getParameter("member")%>">Назад</a></li>
 	</ul>
 
 	<table class="memberstable" border="2" width="60%">
    		<caption><h3>Таблица товаров</h3></caption>
    	<tr>
-   		<td>Полная информация</td>
+   		<td>Функции</td>
     	<td>QR Image</td>
     	<td>QR code</td>
     	<td>Contract</td>
@@ -72,7 +72,8 @@
    				<a href="productview.jsp?member=<%=request.getParameter("member")%>
    				&range=<%=request.getParameter("range")%>&contract=<%=i%>">
    					Просмотр
-   				</a>
+   				</a><br>
+				Удалить запись
    			</td>
    			<td>
 				<img src="engine/qr?codingString=<%=bufferToPrintProperties.getQr()%>"/>

@@ -7,6 +7,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.util.Random" %>
+<%@ page import="java.lang.reflect.Array" %>
 <%!
 	// Actions that may be invoked
 	public final String ACTION_EDIT = "edit";
@@ -26,6 +28,15 @@
 	
 	// NULL CONSTANT
 	public final String SZ_NULL = "null";
+
+	// 16 system to create default links
+	final char [] availableSymbols = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+
+	// All link length
+	final int linkLength = 8;
+
+	// Massive of all qr links
+	ArrayList<String> allInaccessibleLinks;
 %>
 <html>
 <head>
@@ -62,6 +73,15 @@
 	else
 		parsedContractParam = contractsArray.size();
 	Contract bufferToShowModel = new Contract();
+
+	// Count and add addresses witch are existing
+	String unicsQR = contractsArray.get(0).getQr();
+	allInaccessibleLinks = new ArrayList();
+	allInaccessibleLinks.add(unicsQR);
+	for(Contract c : contractsArray)
+		if(c.getQr() != unicsQR)
+			allInaccessibleLinks.add(c.getQr());
+
 
 	if (request.getParameter(BTN_EDIT) != null) action = ACTION_EDIT;
 	if (request.getParameter(BTN_CREATE) != null) action = ACTION_CREATE;
@@ -119,8 +139,25 @@
 			Integer index = Integer.parseInt(bufferToShowModel.getZVER()) + 1;
 			bufferToShowModel.setZVER(index.toString());
 		}
+		if(SZ_NULL.equals(bufferToShowModel.getQr()) || bufferToShowModel.getQr() == null){
+			Random randLinkCreater = new Random();
+			String firstPartLink = "http://qr.qxyz.ru?q="+rangeParam;
+			StringBuilder secondLinkPart = new StringBuilder();
+			String allLink = "";
+			do{
+				int remainderPartOfQr = linkLength - rangeParam.length();
 
-		//bufferToShowModel.createRecordInDB(bufferToShowModel.toString());
+				while (remainderPartOfQr != 0) {
+					int buffer = randLinkCreater.nextInt(16);
+					char randomCharToSecondPart = availableSymbols[buffer];
+					secondLinkPart.append(randomCharToSecondPart);
+
+					remainderPartOfQr--;
+				}
+				allLink = firstPartLink + secondLinkPart.toString();
+			}while(allInaccessibleLinks.contains(allLink));
+			bufferToShowModel.setQr(allLink);
+		}
 	}
 	if(ACTION_SAVE.equals(action)){
 		if("1".equals(bufferToShowModel.getZVER()))
@@ -130,7 +167,7 @@
 			Integer numberOfSecondProductVersion = Integer.parseInt(bufferToUpdateVersion);
 			bufferToShowModel.setZVER((++numberOfSecondProductVersion).toString());
 		}
-		bufferToShowModel.createRecordInDB(bufferToShowModel.toString(), writer);
+		bufferToShowModel.createRecordInDB(bufferToShowModel.toString());
 	}
 	%>
 <h1> Изменить запись </h1>
@@ -154,9 +191,13 @@
     		<tr>
     			<td>Ссылка: </td>
     			<td>
-    				<a target="_" name="Qr" href="<%="http://qr.qxyz.ru/?q="+bufferToShowModel.getQr()%>">
+    				<a target="_" name="Qr" value=<%="http://qr.qxyz.ru/?q="+bufferToShowModel.getQr()%>
+							href="<%="http://qr.qxyz.ru/?q="+bufferToShowModel.getQr()%>">
 						<%="http://qr.qxyz.ru/?q="+bufferToShowModel.getQr()%>
 					</a>
+				</td>
+				<td>
+					<input name="Qr" value="http://qr.qxyz.ru/?q="<%=bufferToShowModel.getQr()%>/>
 				</td>
 			</tr>
    	 		<tr>
