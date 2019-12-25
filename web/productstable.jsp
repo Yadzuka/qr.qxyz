@@ -18,7 +18,7 @@
 
 	<ul>
 		<li><a href="update.jsp?member=<%=member%>&range=<%=request.getParameter("range")%>&action=create">Создать новую запись</a></li>
-		<li><a href="ranges.jsp?member=<%=request.getParameter("member")%>">Назад</a></li>
+		<li><a href="ranges.jsp?member=<%=member%>">Назад</a></li>
 	</ul>
 
 	<table class="memberstable" border="2" width="60%">
@@ -70,7 +70,7 @@
    		<tr>
    			<td>
    				<a href="productview.jsp?member=<%=request.getParameter("member")%>
-   				&range=<%=request.getParameter("range")%>&contract=<%=i%>">
+   				&range=<%=request.getParameter("range")%>&zoid=<%=i%>">
    					Просмотр
    				</a><br>
 				Удалить запись

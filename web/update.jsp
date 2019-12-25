@@ -61,7 +61,6 @@
 //
 	ControllerContracts contractController = new ControllerContracts();
 	ArrayList<Contract> contractsArray = contractController.getContracts();
-    PrintWriter writer = response.getWriter();
 
 	int parsedContractParam;
 	String memberParam = request.getParameter("member");
@@ -87,27 +86,60 @@
 	if (request.getParameter(BTN_CREATE) != null) action = ACTION_CREATE;
 	if (request.getParameter(BTN_SAVE) != null) action = ACTION_SAVE;
 	if (request.getParameter(BTN_REFRESH) != null) action = ACTION_REFRESH;
+	if(request.getParameter(BTN_CANCEL) != null) action = ACTION_CANCEL;
 	if (!Arrays.asList(ACTIONS).contains(action)) action = null;
 	//default action
 	if (action == null) action = "edit"; //edit, create, save, refresh
 
 	if (ACTION_CANCEL.equals(action)) {
+		bufferToShowModel.setZOID(request.getParameter("zoid"));
 		//response.sendRedirection();
-		response.sendRedirect("/productview.jsp");
+		if(SZ_NULL.equals(bufferToShowModel.getZOID()) || bufferToShowModel.getZOID() == null )
+			request.getRequestDispatcher("productstable.jsp?member="+memberParam+"&range="
+					+rangeParam).forward(request, response);
+		else
+			/*response.sendRedirect("productview.jsp?member="+memberParam+"&range="
+					+rangeParam+"&zoid="+parsedContractParam);*/
+			request.getRequestDispatcher("productview.jsp?member="+memberParam+"&range="
+				+rangeParam+"&zoid="+parsedContractParam).forward(request,response);
 
 	}
 	if(ACTION_REFRESH.equals(action)){
-		bufferToShowModel = contractController.getContract(parsedContractParam);
+		bufferToShowModel.setZOID(request.getParameter("zoid"));
+		if(SZ_NULL.equals(bufferToShowModel.getZOID()) || bufferToShowModel.getZOID() == null )
+			response.sendRedirect("update.jsp?member="+memberParam+
+				"&range="+rangeParam+"&action="+ACTION_CREATE);
+		else
+			response.sendRedirect("update.jsp?member="+memberParam+
+					"&range="+rangeParam+"&zoid="+parsedContractParam);
 	}
 	if (ACTION_EDIT.equals(action)) {
 		bufferToShowModel = contractController.getContract(parsedContractParam);
 	}
+	// Set all model parameters
 	if (ACTION_SAVE.equals(action)) {
 		// STD_HEADER fields
 		bufferToShowModel.setZOID(request.getParameter("ZOID"));
+		// Write to file and set version to +1 of the latest
+		Contract biggestZOIDContract = contractsArray.get(0);
+		if (SZ_NULL.equals(bufferToShowModel.getZOID()) || bufferToShowModel.getZOID() == null) {
+			Integer buffer = 0;
+			for (int i = 0; i < contractsArray.size(); i++) {
+				buffer = Integer.parseInt(biggestZOIDContract.getZOID());
+				if (buffer < Integer.parseInt(contractsArray.get(i).getZOID()))
+					biggestZOIDContract = contractsArray.get(i);
+			}
+			buffer++;
+			bufferToShowModel.setZOID(buffer.toString());
+		}
+
 		bufferToShowModel.setZVER(request.getParameter("ZVER"));
+		if (SZ_NULL.equals(bufferToShowModel.getZVER()) || bufferToShowModel.getZVER() == null) {
+			bufferToShowModel.setZVER("0");
+		}
+
 		bufferToShowModel.setZDATE(new Date().toString());
-		bufferToShowModel.setZUID("yadzuka");
+		bufferToShowModel.setZUID(request.getRemoteUser());
 		bufferToShowModel.setZSTA("N");
 		// data fields
 		bufferToShowModel.setQr(request.getParameter("Qr"));
@@ -126,25 +158,15 @@
 		bufferToShowModel.setWARRANTYSTART(request.getParameter("WARRANTYSTART"));
 		bufferToShowModel.setWARRANTYEND(request.getParameter("WARRANTYEND"));
 		bufferToShowModel.setCOMMENT(request.getParameter("COMMENT"));
-	}
-	if (ACTION_CREATE.equals(action)) {
-		if (SZ_NULL.equals(bufferToShowModel.getZOID()) || bufferToShowModel.getZOID() == null) {
-			Integer buffer = Integer.parseInt(contractsArray.get(contractsArray.size() - 1).getZOID());
-			buffer++;
-			bufferToShowModel.setZOID(buffer.toString());
-		}
-		if (SZ_NULL.equals(bufferToShowModel.getZVER()) || bufferToShowModel.getZVER() == null) {
-			bufferToShowModel.setZVER("1");
-		} else {
-			Integer index = Integer.parseInt(bufferToShowModel.getZVER()) + 1;
-			bufferToShowModel.setZVER(index.toString());
-		}
-		if(SZ_NULL.equals(bufferToShowModel.getQr()) || bufferToShowModel.getQr() == null){
+
+		if (SZ_NULL.equals(bufferToShowModel.getQr()) || bufferToShowModel.getQr() == null) {
 			Random randLinkCreater = new Random();
 			String firstPartLink = rangeParam;
 			StringBuilder secondLinkPart = new StringBuilder();
+			int maxZOID = Integer.parseInt(biggestZOIDContract.getZOID());
+
 			String allLink = "";
-			do{
+			do {
 				int remainderPartOfQr = linkLength - rangeParam.length();
 
 				while (remainderPartOfQr != 0) {
@@ -155,22 +177,21 @@
 					remainderPartOfQr--;
 				}
 				allLink = firstPartLink + secondLinkPart.toString();
-			}while(allInaccessibleLinks.contains(allLink));
+			} while (allInaccessibleLinks.contains(allLink));
 			bufferToShowModel.setQr(allLink);
 		}
-	}
-	if(ACTION_SAVE.equals(action)){
-		if("1".equals(bufferToShowModel.getZVER()))
-			;
-		else {
-			String bufferToUpdateVersion = bufferToShowModel.getZVER();
-			Integer numberOfSecondProductVersion = Integer.parseInt(bufferToUpdateVersion);
-			bufferToShowModel.setZVER((++numberOfSecondProductVersion).toString());
-		}
+
+		String bufferToUpdateVersion = bufferToShowModel.getZVER();
+		Integer numberOfSecondProductVersion = Integer.parseInt(bufferToUpdateVersion);
+		bufferToShowModel.setZVER((++numberOfSecondProductVersion).toString());
 		bufferToShowModel.createRecordInDB(bufferToShowModel.toString());
 
-		request.getRequestDispatcher("/productstable.jsp?member="+memberParam+"&range="+rangeParam)
-				.forward(request,response);
+		//contractsArray.add(bufferToShowModel);
+		request.getRequestDispatcher("productview.jsp?member=" + memberParam + "&range="
+				+ rangeParam + "&zoid=" + (contractsArray.size())).forward(request, response);
+	}
+	if (ACTION_CREATE.equals(action)) {
+
 	}
 	%>
 <h1> Изменить запись </h1>
@@ -193,11 +214,6 @@
 			</tr>
     		<tr>
     			<td>Ссылка: </td>
-    			<td>
-    				<a target="_" href="<%="http://qr.qxyz.ru/?q="+bufferToShowModel.getQr()%>">
-						<%="http://qr.qxyz.ru/?q="+bufferToShowModel.getQr()%>
-					</a>
-				</td>
 				<td>
 					<input name="Qr" value="<%=bufferToShowModel.getQr()%>"/>
 				</td>
@@ -267,7 +283,11 @@
 				</a>
 
 			</tr>
+
    	 	</table>
+	<input type="submit" name="save" value="Сохранить">
+	<input type="submit" name="refresh" value="Обновить">
+	<input type="submit" name="cancel" value="Отмена">
 </form>
 
 	<%

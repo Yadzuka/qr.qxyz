@@ -16,12 +16,12 @@ public class Ranges {
     public Ranges(){
 
     }
-
+    String officialPathToDB = "/home/yadzuka/workspace/Java_projects/qr.qxyz/db/members/";
     // Range getter
     public String getOneRange(String pathName){
 
         // Set paths and initialize variables
-        pathToRanges = new File("/home/yadzuka/workspace/Java_projects/qr.qxyz/db/members/" + pathName +"/");
+        pathToRanges = new File(Members.getWayToDB() + pathName +"/");
         pathToCSV = new File(pathToRanges.getAbsolutePath() + "/0100D");
         allDirectories  = pathToRanges.listFiles();
 

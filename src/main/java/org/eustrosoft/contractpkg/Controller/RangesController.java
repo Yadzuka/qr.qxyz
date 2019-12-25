@@ -46,16 +46,5 @@ public class RangesController {
 
         // PRINT WRITER CLOSES IN JSP! BUFFERED READER AS WELL!
         return bufferForWriting;
-
-        // Future variant with non-static link to csv (db) file
-
-            /*if(allDirectories[i].isDirectory() && allDirectories[i].getName() != "global") {
-                pathToQR = allDirectories[i].getAbsolutePath();
-                File qrDirectoryCode = new File(pathToQR);
-                File [] filesInQRDirectory = qrDirectoryCode.listFiles();
-                for(int j =0; j < filesInQRDirectory.length; j++){
-                    if(filesInQRDirectory[j].isDirectory())
-                        pathToQR += filesInQRDirectory[i];*/
-
     }
 }

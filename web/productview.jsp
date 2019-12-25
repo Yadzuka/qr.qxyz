@@ -11,12 +11,12 @@
 <%
 	String memberParam = request.getParameter("member");
 	String rangeParam = request.getParameter("range");
-	String contractParam = request.getParameter("contract");
+	String contractParam = request.getParameter("zoid");
 	int parsedContractParam = 0;
 	try {
 		 parsedContractParam = Integer.parseInt(contractParam);
 	}catch(Exception ex){
-		request.getRequestDispatcher("errorpage.jsp").forward(request,response);
+
 	}
 	ControllerContracts contractController = new ControllerContracts();
 	Contract bufferToShowModel = contractController.getContract(parsedContractParam);

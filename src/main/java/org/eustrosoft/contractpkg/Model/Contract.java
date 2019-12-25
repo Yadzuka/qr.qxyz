@@ -23,8 +23,7 @@ public class Contract {
 
     // Private constructors to init class inside
     public Contract(){
-    	pathToDBFile = "/home/yadzuka/workspace/Java_projects/qr.qxyz"
-    			+ "/db/members/EXAMPLESD/0100D/master.list.csv";
+    	pathToDBFile = Members.getWayToDB() + "/EXAMPLESD/0100D/master.list.csv";
     	setProductPropertiesLength(pathToDBFile);
 	}
 
@@ -152,7 +151,9 @@ public class Contract {
 	
 	public void createRecordInDB(String stringToWrite) {
 		try {
-			PrintWriter db = new PrintWriter(new BufferedWriter(new FileWriter(pathToDBFile, true)));
+            PrintWriter db = new PrintWriter(new BufferedWriter
+                    (new FileWriter(pathToDBFile, StandardCharsets.UTF_8,true)));
+			//PrintWriter db = new PrintWriter(new BufferedWriter(new FileWriter(pathToDBFile, true)));
 			try(PrintWriter out = db){ out.println(stringToWrite); out.flush(); }
 		} catch (IOException e) {
 		    System.err.println(e);

@@ -8,36 +8,25 @@ import java.io.File;
 public class Members {
 
 	// Global parameters to get existing members
+	private static String wayToDB;
 	private String [] companyNames;
 	private File [] listOfMembers;
 	private int membersCounter;
 
+	public static void setWayToDB(String wayToDBlink){
+		wayToDB = wayToDBlink;
+	}
+	public static String getWayToDB(){
+		return wayToDB;
+	}
 	// Constructor to set capacity of company names
 	public Members() {
 
 	}
 
-	// Set member's counter
-	/*public int getCounterOfMembers() {
-		String absolutePathToMembers = new File("db/members/").getAbsolutePath();
-		File directories = new File(absolutePathToMembers);
-		listOfMembers = directories.listFiles();
-
-		assert listOfMembers != null;
-		return listOfMembers.length;
-	}
-
-	// Get company names from companyNames variable
-	public String[] getCompanyNames() {
-		for(int i = 0; i < getCounterOfMembers(); i++) {
-			companyNames[i] = listOfMembers[i].getName();
-		}
-		return companyNames;
-	}*/
 	public String [] getCompanyNames(){
 
-		String buffFile = new File("db/members/").getAbsolutePath();
-		listOfMembers = new File("/home/yadzuka/workspace/Java_projects/qr.qxyz/db/members").listFiles();
+		listOfMembers = new File(wayToDB).listFiles();
 
 		assert listOfMembers != null;
 
