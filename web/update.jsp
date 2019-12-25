@@ -95,13 +95,13 @@
 		bufferToShowModel.setZOID(request.getParameter("zoid"));
 		//response.sendRedirection();
 		if(SZ_NULL.equals(bufferToShowModel.getZOID()) || bufferToShowModel.getZOID() == null )
-			request.getRequestDispatcher("productstable.jsp?member="+memberParam+"&range="
-					+rangeParam).forward(request, response);
+			response.sendRedirect("productstable.jsp?member="+memberParam+"&range="
+					+rangeParam);
 		else
 			/*response.sendRedirect("productview.jsp?member="+memberParam+"&range="
 					+rangeParam+"&zoid="+parsedContractParam);*/
-			request.getRequestDispatcher("productview.jsp?member="+memberParam+"&range="
-				+rangeParam+"&zoid="+parsedContractParam).forward(request,response);
+			response.sendRedirect("productview.jsp?member="+memberParam+"&range="
+				+rangeParam+"&zoid="+parsedContractParam);
 
 	}
 	if(ACTION_REFRESH.equals(action)){
@@ -187,8 +187,8 @@
 		bufferToShowModel.createRecordInDB(bufferToShowModel.toString());
 
 		//contractsArray.add(bufferToShowModel);
-		request.getRequestDispatcher("productview.jsp?member=" + memberParam + "&range="
-				+ rangeParam + "&zoid=" + (contractsArray.size())).forward(request, response);
+        response.sendRedirect("productview.jsp?member=" + memberParam + "&range="
+                + rangeParam + "&zoid=" + (contractsArray.size()));
 	}
 	if (ACTION_CREATE.equals(action)) {
 

@@ -16,7 +16,7 @@ public class Ranges {
     public Ranges(){
 
     }
-    String officialPathToDB = "/home/yadzuka/workspace/Java_projects/qr.qxyz/db/members/";
+    //String officialPathToDB = "/home/yadzuka/workspace/Java_projects/qr.qxyz/db/members/";
     // Range getter
     public String getOneRange(String pathName){
 
