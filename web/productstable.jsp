@@ -18,8 +18,8 @@
 	%>
 
 	<ul>
-		<li><a href="update.jsp?member=<%=member%>&range=<%=request.getParameter("range")%>&action=create">Создать новую запись</a></li>
 		<li><a href="ranges.jsp?member=<%=member%>">Назад</a></li>
+		<li><a href="update.jsp?member=<%=member%>&range=<%=request.getParameter("range")%>&action=create">Создать новую запись</a></li>
 	</ul>
 
 	<table class="memberstable" border="2" width="60%">
@@ -41,7 +41,7 @@
 			int firstCompositor;
 			int secondCompositor;
 			// Prints only last version of object
-			for(int i = 0; i < availableContracts.size(); i++){
+			for(int i = availableContracts.size()-1; i >= 0; i--){
 
 				bufferToPrintProperties = availableContracts.get(i);
 				bufferForComparison = availableContracts.get(i);

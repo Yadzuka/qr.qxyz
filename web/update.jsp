@@ -10,6 +10,18 @@
 <%@ page import="java.util.Random" %>
 <%@ page import="java.lang.reflect.Array" %>
 <%!
+	public static void generateQR(Contract contractToSetNewQr, String rangeParam, ArrayList<Contract> contractsArray){
+		StringBuffer bufferForSecondPartOfLink = new StringBuffer();
+		Integer maxZOID = Integer.parseInt(contractsArray.get(0).getZOID());
+		for(int i = 0;i<contractsArray.size();i++){
+			if(Integer.parseInt(contractsArray.get(i).getZOID()) > maxZOID)
+				maxZOID = Integer.parseInt(contractsArray.get(i).getZOID());
+		}
+		maxZOID++;
+		String s =  String.format("%s%03x",rangeParam, Long.valueOf(maxZOID));
+		contractToSetNewQr.setQr(s);
+	}
+
 	// Actions that may be invoked
 	public final String ACTION_EDIT = "edit";
 	public final String ACTION_CREATE = "create";
@@ -48,6 +60,7 @@
 	<link rel="stylesheet" type="text/css" href="css/head.css">
 </head>
 <%
+
 	// From psql.jsp
 	long enter_time = System.currentTimeMillis();
 	long expire_time = enter_time + 24*60*60*1000;
@@ -135,9 +148,9 @@
 		if (SZ_NULL.equals(bufferToShowModel.getZOID()) || bufferToShowModel.getZOID() == null) {
 			Integer buffer = 0;
 			for (int i = 0; i < contractsArray.size(); i++) {
-				buffer = Integer.parseInt(biggestZOIDContract.getZOID());
 				if (buffer < Integer.parseInt(contractsArray.get(i).getZOID()))
 					biggestZOIDContract = contractsArray.get(i);
+				buffer = Integer.parseInt(biggestZOIDContract.getZOID());
 			}
 			buffer++;
 			bufferToShowModel.setZOID(buffer.toString());
@@ -173,7 +186,6 @@
 			Random randLinkCreater = new Random();
 			String firstPartLink = rangeParam;
 			StringBuilder secondLinkPart = new StringBuilder();
-			int maxZOID = Integer.parseInt(biggestZOIDContract.getZOID());
 
 			String allLink = "";
 			do {
@@ -196,12 +208,12 @@
 		bufferToShowModel.setZVER((++numberOfSecondProductVersion).toString());
 		bufferToShowModel.createRecordInDB(bufferToShowModel.toString());
 
-		//contractsArray.add(bufferToShowModel);
 		response.sendRedirect("productview.jsp?member=" + memberParam + "&range="
 				+ rangeParam + "&zoid=" + (contractsArray.size()));
 	}
 
 	if (ACTION_CREATE.equals(action)) {
+		generateQR(bufferToShowModel,rangeParam,contractsArray);
 	}
 %>
 <body>
@@ -211,11 +223,11 @@
 </ul>
 <br/>
 <form action="update.jsp?member=<%=memberParam%>&range=<%=rangeParam%>&zoid=<%=zoidParam%>&action=<%=action%>" method="POST">
-	
-	<input type="submit" name="save" value="Сохранить">
-	<input type="submit" name="refresh" value="Обновить">
+
 	<input type="submit" name="cancel" value="Отмена">
-	
+	<input type="submit" name="refresh" value="Обновить">
+	<input type="submit" name="save" value="Сохранить">
+
 		<input type="hidden" name="ZOID" value="<%=bufferToShowModel.getZOID()%>">
 		<input type="hidden" name="ZVER" value="<%=bufferToShowModel.getZVER()%>">
 

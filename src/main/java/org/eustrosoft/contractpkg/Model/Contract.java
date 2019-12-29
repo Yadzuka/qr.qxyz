@@ -80,7 +80,7 @@ public class Contract {
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(pathToDBFile),
                                         StandardCharsets.UTF_8));
 			String stringForLine = "";
-			while ((stringForLine = reader.readLine()) != null) {
+			while ((stringForLine = reader.readLine()) != null && !"".trim().equals(stringForLine)) {
 				if (stringForLine.startsWith("#") || startingList.equals(""))
 					continue;
 				else {

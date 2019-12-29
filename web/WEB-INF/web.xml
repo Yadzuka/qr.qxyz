@@ -8,7 +8,6 @@
     <display-name>Test</display-name>
 
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
         <welcome-file>members.jsp</welcome-file>
     </welcome-file-list>
 
