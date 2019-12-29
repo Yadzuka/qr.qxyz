@@ -16,7 +16,8 @@
 	public final String ACTION_SAVE = "save";
 	public final String ACTION_REFRESH = "refresh";
 	public final String ACTION_CANCEL = "cancel";
-	public final String [] ACTIONS = {ACTION_EDIT,ACTION_CREATE,ACTION_SAVE,ACTION_REFRESH, ACTION_CANCEL};
+	public final String ACTION_GENERATEQR ="genqr";
+	public final String [] ACTIONS = {ACTION_EDIT,ACTION_CREATE,ACTION_SAVE,ACTION_REFRESH, ACTION_CANCEL, ACTION_GENERATEQR};
 	
 	// buttons
 	public final String BTN_EDIT = ACTION_EDIT;
@@ -24,7 +25,8 @@
 	public final String BTN_SAVE = ACTION_SAVE;
 	public final String BTN_REFRESH = ACTION_REFRESH;
 	public final String BTN_CANCEL = ACTION_CANCEL;
-	public final String [] BUTTONS = {BTN_EDIT, BTN_CREATE, BTN_SAVE, BTN_REFRESH, BTN_CANCEL};
+	public final String BTN_GENERATEQR = ACTION_GENERATEQR;
+	public final String [] BUTTONS = {BTN_EDIT, BTN_CREATE, BTN_SAVE, BTN_REFRESH, BTN_CANCEL, BTN_GENERATEQR};
 	
 	// NULL CONSTANT
 	public final String SZ_NULL = "null";
@@ -43,21 +45,16 @@
 	<title>
 		Update record
 	</title>
+	<link rel="stylesheet" type="text/css" href="css/head.css">
 </head>
-<body>
-<div>
-<a href="/Contracts_1_0_SNAPSHOT_war/">go home
-</a>
-</div>
-
 <%
-// From psql.jsp
- long enter_time = System.currentTimeMillis();
- long expire_time = enter_time + 24*60*60*1000;
- response.setHeader("Cache-Control","No-cache");
- response.setHeader("Pragma","no-cache");
- response.setDateHeader("Expires",expire_time);
- request.setCharacterEncoding("UTF-8");
+	// From psql.jsp
+	long enter_time = System.currentTimeMillis();
+	long expire_time = enter_time + 24*60*60*1000;
+	response.setHeader("Cache-Control","No-cache");
+	response.setHeader("Pragma","no-cache");
+	response.setDateHeader("Expires",expire_time);
+	request.setCharacterEncoding("UTF-8");
 //
 	ControllerContracts contractController = new ControllerContracts();
 	ArrayList<Contract> contractsArray = contractController.getContracts();
@@ -87,9 +84,22 @@
 	if (request.getParameter(BTN_SAVE) != null) action = ACTION_SAVE;
 	if (request.getParameter(BTN_REFRESH) != null) action = ACTION_REFRESH;
 	if(request.getParameter(BTN_CANCEL) != null) action = ACTION_CANCEL;
+	if(request.getParameter(BTN_GENERATEQR) != null) action = ACTION_GENERATEQR;
 	if (!Arrays.asList(ACTIONS).contains(action)) action = null;
 	//default action
 	if (action == null) action = "edit"; //edit, create, save, refresh
+
+	if(ACTION_GENERATEQR.equals(action)){
+		StringBuffer bufferForSecondPartOfLink = new StringBuffer();
+		Integer maxZOID = Integer.parseInt(contractsArray.get(0).getZOID());
+		for(int i = 0;i<contractsArray.size();i++){
+			if(Integer.parseInt(contractsArray.get(i).getZOID()) > maxZOID)
+				maxZOID = Integer.parseInt(contractsArray.get(i).getZOID());
+		}
+		maxZOID++;
+		String s =  String.format("%s%03x",rangeParam, Long.valueOf(maxZOID));
+		bufferToShowModel.setQr(s);
+	}
 
 	if (ACTION_CANCEL.equals(action)) {
 		bufferToShowModel.setZOID(request.getParameter("zoid"));
@@ -101,14 +111,14 @@
 			/*response.sendRedirect("productview.jsp?member="+memberParam+"&range="
 					+rangeParam+"&zoid="+parsedContractParam);*/
 			response.sendRedirect("productview.jsp?member="+memberParam+"&range="
-				+rangeParam+"&zoid="+parsedContractParam);
+					+rangeParam+"&zoid="+parsedContractParam);
 
 	}
 	if(ACTION_REFRESH.equals(action)){
 		bufferToShowModel.setZOID(request.getParameter("zoid"));
 		if(SZ_NULL.equals(bufferToShowModel.getZOID()) || bufferToShowModel.getZOID() == null )
 			response.sendRedirect("update.jsp?member="+memberParam+
-				"&range="+rangeParam+"&action="+ACTION_CREATE);
+					"&range="+rangeParam+"&action="+ACTION_CREATE);
 		else
 			response.sendRedirect("update.jsp?member="+memberParam+
 					"&range="+rangeParam+"&zoid="+parsedContractParam);
@@ -187,15 +197,19 @@
 		bufferToShowModel.createRecordInDB(bufferToShowModel.toString());
 
 		//contractsArray.add(bufferToShowModel);
-        response.sendRedirect("productview.jsp?member=" + memberParam + "&range="
-                + rangeParam + "&zoid=" + (contractsArray.size()));
+		response.sendRedirect("productview.jsp?member=" + memberParam + "&range="
+				+ rangeParam + "&zoid=" + (contractsArray.size()));
 	}
-	if (ACTION_CREATE.equals(action)) {
 
+	if (ACTION_CREATE.equals(action)) {
 	}
-	%>
-<h1> Изменить запись </h1>
-	
+%>
+<body>
+<ul>
+	<li><a href="/Contracts_1_0_SNAPSHOT_war/">go home</a></li>
+	<li><a href="productstable.jsp?member=<%=memberParam%>&range=<%=rangeParam%>">Назад к списку контрактов</a></li>
+</ul>
+<br/>
 <form action="update.jsp?member=<%=memberParam%>&range=<%=rangeParam%>&zoid=<%=zoidParam%>&action=<%=action%>" method="POST">
 	
 	<input type="submit" name="save" value="Сохранить">
@@ -216,6 +230,9 @@
     			<td>Ссылка: </td>
 				<td>
 					<input name="Qr" value="<%=bufferToShowModel.getQr()%>"/>
+				</td>
+				<td>
+					<input type="submit" name="genqr" value="Сгенерировать новый код"/>
 				</td>
 			</tr>
    	 		<tr>
@@ -277,13 +294,6 @@
    	 			<td>Комментарий: </td>
    	 			<td><input name="COMMENT" value="<%=bufferToShowModel.getCOMMENT()%>"></td>
    	 		</tr>
-			<tr>
-				<a href="productstable.jsp?member=<%=memberParam%>&range=<%=rangeParam%>">
-					Назад к списку контрактов
-				</a>
-
-			</tr>
-
    	 	</table>
 	<input type="submit" name="save" value="Сохранить">
 	<input type="submit" name="refresh" value="Обновить">

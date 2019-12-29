@@ -195,8 +195,12 @@ public class Contract {
     ////////////////////////
 
     // QR Number in db
-    public String getQr() {
-        return QR;
+    public String getQr()
+    {
+        if("null".equals(QR) || QR == null)
+            return "";
+        else
+            return QR;
     }
 
     public void setQr(String qr) {
@@ -205,7 +209,10 @@ public class Contract {
 
     // Contract reference
     public String getContractum() {
-        return CONTRACTNUM;
+        if("null".equals(CONTRACTNUM) || CONTRACTNUM == null)
+            return "";
+        else
+            return CONTRACTNUM;
     }
     
     public void setContractum(String contract) {
@@ -213,8 +220,12 @@ public class Contract {
     }
 
     //  Contract date
-    public String getContractdate() {
-        return contractdate;
+    public String getContractdate()
+    {
+        if("null".equals(contractdate) || contractdate == null)
+            return "";
+        else
+            return contractdate;
     }
 
     public void setContractdate(String contractdate) {
@@ -222,8 +233,12 @@ public class Contract {
     }
 
     // Count of money
-    public String getMoney() {
-        return MONEY;
+    public String getMoney()
+    {
+        if("null".equals(MONEY) || MONEY == null)
+            return "";
+        else
+            return MONEY;
     }
 
     public void setMoney(String money) {
@@ -232,7 +247,10 @@ public class Contract {
 
     //  Supplier
     public String getSUPPLIER() {
-        return SUPPLIER;
+        if("null".equals(SUPPLIER) || SUPPLIER == null)
+            return "";
+        else
+            return SUPPLIER;
     }
 
     public void setSUPPLIER(String sUPPLIER) {
@@ -240,8 +258,12 @@ public class Contract {
     }
 
     //  Client
-    public String getCLIENT() {
-        return CLIENT;
+    public String getCLIENT()
+    {
+        if("null".equals(CLIENT) || CLIENT == null)
+            return "";
+        else
+            return CLIENT;
     }
 
     public void setCLIENT(String cLIENT) {
@@ -250,7 +272,11 @@ public class Contract {
 
     //  Product type
     public String getPRODTYPE() {
-        return PRODTYPE;
+
+        if("null".equals(PRODTYPE) || PRODTYPE == null)
+            return "";
+        else
+            return PRODTYPE;
     }
 
     public void setPRODTYPE(String pRODTYPE) {
@@ -259,7 +285,11 @@ public class Contract {
 
     //  Model
     public String getMODEL() {
-        return MODEL;
+
+        if("null".equals(MODEL) || MODEL == null)
+            return "";
+        else
+            return MODEL;
     }
 
     public void setMODEL(String mODEL) {
@@ -268,7 +298,11 @@ public class Contract {
 
     //  Serial number
     public String getSN() {
-        return SN;
+
+        if("null".equals(SN) || SN == null)
+            return "";
+        else
+            return SN;
     }
 
     public void setSN(String sN) {
@@ -277,7 +311,11 @@ public class Contract {
 
     //  Product date
     public String getProdate() {
-        return prodate;
+
+        if("null".equals(prodate) || prodate == null)
+            return "";
+        else
+            return prodate;
     }
 
     public void setProdate(String prodate) {
@@ -285,8 +323,12 @@ public class Contract {
     }
 
     //  Ship/Delivery date
-    public String getShipdate() {
-        return shipdate;
+    public String getShipdate()
+    {
+        if("null".equals(shipdate) || shipdate == null)
+            return "";
+        else
+            return shipdate;
     }
 
     public void setShipdate(String shipdate) {
@@ -294,8 +336,12 @@ public class Contract {
     }
 
     //  Sale date
-    public String getSALEDATE() {
-        return SALEDATE;
+    public String getSALEDATE()
+    {
+        if("null".equals(SALEDATE) || SALEDATE == null)
+            return "";
+        else
+            return SALEDATE;
     }
 
     public void setSALEDATE(String sALEDATE) {
@@ -303,8 +349,12 @@ public class Contract {
     }
 
     // Departure date
-    public String getDEPARTUREDATE() {
-        return DEPARTUREDATE;
+    public String getDEPARTUREDATE()
+    {
+        if("null".equals(DEPARTUREDATE) || DEPARTUREDATE == null)
+            return "";
+        else
+            return DEPARTUREDATE;
     }
 
     public void setDEPARTUREDATE(String dEPARTUREDATE) {
@@ -312,8 +362,12 @@ public class Contract {
     }
 
     //  Warranty period start
-    public String getWARRANTYSTART() {
-        return WARRANTYSTART;
+    public String getWARRANTYSTART()
+    {
+        if("null".equals(WARRANTYSTART) || WARRANTYSTART == null)
+            return "";
+        else
+            return WARRANTYSTART;
     }
 
     public void setWARRANTYSTART(String wARRANTYSTART) {
@@ -321,8 +375,12 @@ public class Contract {
     }
 
     // Warranty period end
-    public String getWARRANTYEND() {
-        return WARRANTYEND;
+    public String getWARRANTYEND()
+    {
+        if("null".equals(WARRANTYEND) || WARRANTYEND == null)
+            return "";
+        else
+            return WARRANTYEND;
     }
 
     public void setWARRANTYEND(String wARRANTYEND) {
@@ -330,8 +388,12 @@ public class Contract {
     }
 
     //  Commentary to deal
-    public String getCOMMENT() {
-        return COMMENT;
+    public String getCOMMENT()
+    {
+        if("null".equals(COMMENT) || COMMENT == null)
+            return "";
+        else
+            return COMMENT;
     }
 
     public void setCOMMENT(String cOMMENT) {

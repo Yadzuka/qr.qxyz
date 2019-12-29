@@ -1,5 +1,7 @@
 package org.eustrosoft.contractpkg.Controller;
 
+import org.eustrosoft.contractpkg.Model.Members;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
@@ -9,9 +11,7 @@ import java.nio.charset.StandardCharsets;
 public class RangesController {
 
     File pathToRanges;
-    File pathToCSV;
     File[] allDirectories;
-    PrintWriter printWriter;
     BufferedReader bufferedReader;
 
     StringBuilder sb;
@@ -19,15 +19,14 @@ public class RangesController {
     String bufferForWriting = "";
 
     // Set paths and initialize variables
-    public RangesController(PrintWriter printWriter, String context){
-        pathToRanges = new File("/home/yadzuka/workspace/Java_projects/qr.qxyz/db/members/" + context + "/");
-        pathToCSV = new File(pathToRanges.getAbsolutePath() + "/0100D/master.list.csv");
+    public RangesController(String context){
+        pathToRanges = new File(Members.getWayToDB() + context + "/");
         allDirectories = pathToRanges.listFiles();
         sb = new StringBuilder();
-        this.printWriter = printWriter;
     }
 
     public String getInfo() throws IOException {
+
         // If finding *.html - read it
         for (int i = 0; i < allDirectories.length; i++) {
             if (allDirectories[i].getName().endsWith("html")) {
@@ -39,10 +38,10 @@ public class RangesController {
                 while ((bufferForWriting = bufferedReader.readLine()) != null) {
                     sb.append(bufferForWriting);
                 }
-                printWriter.println(sb.toString());
+               // printWriter.println(sb.toString());
             }
         }
-        bufferForWriting = printWriter.toString();
+        bufferForWriting = sb.toString();
 
         // PRINT WRITER CLOSES IN JSP! BUFFERED READER AS WELL!
         return bufferForWriting;

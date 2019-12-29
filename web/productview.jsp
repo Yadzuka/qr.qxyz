@@ -6,8 +6,10 @@
 <html>
 <head>
     <title>Product viewing</title>
+	<link rel="stylesheet" type="text/css" href="css/head.css">
 </head>
 <body>
+
 <%
 	String memberParam = request.getParameter("member");
 	String rangeParam = request.getParameter("range");
@@ -21,6 +23,12 @@
 	ControllerContracts contractController = new ControllerContracts();
 	Contract bufferToShowModel = contractController.getContract(parsedContractParam);
 %>
+<ul>
+	<li><a href="productstable.jsp?member=<%=memberParam%>&range=<%=rangeParam%>">
+		Назад</a></li>&nbsp;
+	<li><a href="update.jsp?member=<%=memberParam%>&range=<%=rangeParam%>&zoid=<%=contractParam%>&action=edit">
+		Изменить запись</a></li>
+</ul>
 		<table>
 	   		<tr>
 	   			<td>Картинка qr: </td>
@@ -96,11 +104,6 @@
    	 			<td><%=bufferToShowModel.getCOMMENT()%></td>
    	 		</tr>
    	 	</table>
-    <a href="productstable.jsp?member=<%=memberParam%>&range=<%=rangeParam%>">
-    	Назад
-    </a>&nbsp;
-    <a href="update.jsp?member=<%=memberParam%>&range=<%=rangeParam%>&zoid=<%=contractParam%>&action=edit">
-    	Изменить запись
-    </a>
+
 </body>
 </html>

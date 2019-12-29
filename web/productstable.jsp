@@ -6,6 +6,7 @@
 <head>
     <title>Starting table</title>
     <link rel="stylesheet" type="text/css" href="css/webcss.css"/>
+	<link rel="stylesheet" type="text/css" href="css/head.css">
 </head>
 <body>
 	<%

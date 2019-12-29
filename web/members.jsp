@@ -1,5 +1,7 @@
 <%@ page import="org.eustrosoft.contractpkg.Model.Members" %>
 <%@ page import="java.io.File" %>
+<%@ page import="java.io.OutputStream" %>
+<%@ page import="java.io.InputStream" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -7,8 +9,10 @@
 		Member's table
 	</title>
 	<link rel="stylesheet" type="text/css" href="css/webcss.css"/>
+	<link rel="stylesheet" type="text/css" href="css/head.css">
 </head>
 <body>
+
 
 	<%
 		Members.setWayToDB("/home/yadzuka/workspace/Java_projects/qr.qxyz/db/members/");
@@ -24,6 +28,7 @@
 		// Cycle for each member ( directory ) in the main (members) path
 		for(int i =0; i <  members.getMembersCounter(); i++) {
 			// It also sets directory name in GET parameter
+			
 	%>
 		<tr>
 			<td>
