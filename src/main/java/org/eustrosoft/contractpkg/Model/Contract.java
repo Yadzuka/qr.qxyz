@@ -151,10 +151,12 @@ public class Contract {
 	
 	public void createRecordInDB(String stringToWrite) {
 		try {
-            PrintWriter db = new PrintWriter(new BufferedWriter
-                    (new FileWriter(pathToDBFile, StandardCharsets.UTF_8,true)));
+            BufferedWriter writter = new BufferedWriter
+                    (new OutputStreamWriter(new FileOutputStream(pathToDBFile,true),StandardCharsets.UTF_8));
+           // PrintWriter db = new PrintWriter(new BufferedWriter
+            //        (new FileWriter(pathToDBFile, StandardCharsets.UTF_8,true)));
 			//PrintWriter db = new PrintWriter(new BufferedWriter(new FileWriter(pathToDBFile, true)));
-			try(PrintWriter out = db){ out.println(stringToWrite); out.flush(); }
+			try(BufferedWriter out = writter){ out.write(stringToWrite+"\n"); out.flush(); }
 		} catch (IOException e) {
 		    System.err.println(e);
 		}

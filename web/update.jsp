@@ -90,6 +90,7 @@
 	if (action == null) action = "edit"; //edit, create, save, refresh
 
 	if(ACTION_GENERATEQR.equals(action)){
+
 		StringBuffer bufferForSecondPartOfLink = new StringBuffer();
 		Integer maxZOID = Integer.parseInt(contractsArray.get(0).getZOID());
 		for(int i = 0;i<contractsArray.size();i++){
@@ -103,19 +104,18 @@
 
 	if (ACTION_CANCEL.equals(action)) {
 		bufferToShowModel.setZOID(request.getParameter("zoid"));
-		//response.sendRedirection();
+
 		if(SZ_NULL.equals(bufferToShowModel.getZOID()) || bufferToShowModel.getZOID() == null )
 			response.sendRedirect("productstable.jsp?member="+memberParam+"&range="
 					+rangeParam);
 		else
-			/*response.sendRedirect("productview.jsp?member="+memberParam+"&range="
-					+rangeParam+"&zoid="+parsedContractParam);*/
 			response.sendRedirect("productview.jsp?member="+memberParam+"&range="
 					+rangeParam+"&zoid="+parsedContractParam);
 
 	}
 	if(ACTION_REFRESH.equals(action)){
 		bufferToShowModel.setZOID(request.getParameter("zoid"));
+
 		if(SZ_NULL.equals(bufferToShowModel.getZOID()) || bufferToShowModel.getZOID() == null )
 			response.sendRedirect("update.jsp?member="+memberParam+
 					"&range="+rangeParam+"&action="+ACTION_CREATE);
