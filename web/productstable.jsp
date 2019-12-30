@@ -70,11 +70,10 @@
 		
    		<tr>
    			<td>
-   				<a href="productview.jsp?member=<%=request.getParameter("member")%>
-   				&range=<%=request.getParameter("range")%>&zoid=<%=i%>">
+   				<a href="productview.jsp?member=<%=request.getParameter("member")%>&range=<%=request.getParameter("range")%>&zoid=<%=i%>">
    					Просмотр
    				</a><br>
-				Удалить запись
+				<a>Удалить запись</a>
    			</td>
    			<td>
 				<img src="engine/qr?codingString=<%=bufferToPrintProperties.getQr()%>"/>

@@ -11,7 +11,6 @@
 <%@ page import="java.lang.reflect.Array" %>
 <%!
 	public static void generateQR(Contract contractToSetNewQr, String rangeParam, ArrayList<Contract> contractsArray){
-		StringBuffer bufferForSecondPartOfLink = new StringBuffer();
 		Integer maxZOID = Integer.parseInt(contractsArray.get(0).getZOID());
 		for(int i = 0;i<contractsArray.size();i++){
 			if(Integer.parseInt(contractsArray.get(i).getZOID()) > maxZOID)
@@ -97,23 +96,9 @@
 	if (request.getParameter(BTN_SAVE) != null) action = ACTION_SAVE;
 	if (request.getParameter(BTN_REFRESH) != null) action = ACTION_REFRESH;
 	if(request.getParameter(BTN_CANCEL) != null) action = ACTION_CANCEL;
-	if(request.getParameter(BTN_GENERATEQR) != null) action = ACTION_GENERATEQR;
 	if (!Arrays.asList(ACTIONS).contains(action)) action = null;
 	//default action
 	if (action == null) action = "edit"; //edit, create, save, refresh
-
-	if(ACTION_GENERATEQR.equals(action)){
-
-		StringBuffer bufferForSecondPartOfLink = new StringBuffer();
-		Integer maxZOID = Integer.parseInt(contractsArray.get(0).getZOID());
-		for(int i = 0;i<contractsArray.size();i++){
-			if(Integer.parseInt(contractsArray.get(i).getZOID()) > maxZOID)
-				maxZOID = Integer.parseInt(contractsArray.get(i).getZOID());
-		}
-		maxZOID++;
-		String s =  String.format("%s%03x",rangeParam, Long.valueOf(maxZOID));
-		bufferToShowModel.setQr(s);
-	}
 
 	if (ACTION_CANCEL.equals(action)) {
 		bufferToShowModel.setZOID(request.getParameter("zoid"));
@@ -244,7 +229,9 @@
 					<input name="Qr" value="<%=bufferToShowModel.getQr()%>"/>
 				</td>
 				<td>
-					<input type="submit" name="genqr" value="Сгенерировать новый код"/>
+					<input type="submit" value="Сгенерировать новый код">
+						<% generateQR(bufferToShowModel,rangeParam,contractsArray); %>
+					</input>
 				</td>
 			</tr>
    	 		<tr>
